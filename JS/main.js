@@ -102,7 +102,16 @@ function createAccordianItem(totalDiv){
                 <div id="accordionCollapse${i}" class="accordion-collapse collapse border border-dark rounded"
                     aria-labelledby="accordionHeading${i}">
                     <div class="accordion-body">
-                        ${mouseEventsLogger()}
+                        ${eventsDashboard()}
+                    </div>
+                </div>
+            `;
+        }else if(i===1){
+            accordianHTML+=`
+                <div id="accordionCollapse${i}" class="accordion-collapse collapse border border-dark rounded"
+                    aria-labelledby="accordionHeading${i}">
+                    <div class="accordion-body">
+                        ${applicationDashboard()}
                     </div>
                 </div>
             `;
@@ -122,11 +131,11 @@ function createAccordianItem(totalDiv){
     return accordianHTML;
 }
 
-function mouseEventsLogger(){
+function eventsDashboard(){
     let itemHTML=`
-        <div class="d-flex row">
+        <div class="row">
 
-            <div class="card col-md-3 m-2 bg-dark text-light" id="mousePointerPositionTracker">
+            <div class="card col-md-2 m-2 bg-dark text-light" id="mousePointerPositionTracker">
                 <div class="card-body">
                     <h5 class="card-title">Pointer Display</h5>
                     <div id="mousePointerPositionTrackerText"></div>
@@ -142,18 +151,55 @@ function mouseEventsLogger(){
                     </div>
                 </div>
             </div>
-            
+
+            <div class="card col-md-3 m-2 bg-dark text-light" id="clipboard">
+                <div class="card-body">
+                    <h5 class="card-title" style="width: 100%;">Copy To Clipboard</h5>
+                    <input id="clipboardInput" type="text" value="Sample Text" maxlength="20" style="max-width:70%" class="rounded p-1">
+                    <button id="clipboardIcon" onclick="copyToClipboard()" class="bi bi-clipboard rounded p-1"> Copy</button>
+                </div>
+            </div>
+
             <div class="card col-md-3 m-2 bg-dark text-light" id="hoverToggle">
                 <div class="card-body">
                     <h5 class="card-title">Hover Toggle Card</h5>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing el eius.
-                        nihil?</p>
+                    <p>Lorem cing el eius nihil?</p>
                 </div>
             </div>
 
         </div>
     `;
     return itemHTML;
+}
+
+function applicationDashboard(){
+    let accordianHTML=``;
+    accordianHTML+=`
+    <div class="row">
+
+        <div class="card col-md-3 m-2 bg-dark text-light">
+            <div class="card-body">
+                <h5 class="card-title" style="width: 100%;">Share Text</h5>
+                <div>        
+                    <input class="bg-light text-dark rounded p-1" id="textToBeShared" type="text" value="Text To Be Shared" style="max-width:65%">
+                    <button onclick="copyAndShareTextWithURL()" class="bi bi-share rounded p-1"> Share</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card col-md-4 m-2 bg-dark text-light">
+            <div class="card-body">
+                <h5 class="card-title" style="width: 100%;">Get Location</h5>
+                <div>
+                    <button onclick="getLocation()" class="bi bi-geo-alt rounded p-1"> Location</button>
+                    <span id="locationText"></span>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    `;
+    return accordianHTML;
 }
 
 function addDOMEvents(){
@@ -189,5 +235,45 @@ function addDOMEvents(){
         windowDblClickCount++;
         windowDblClickCounterElement.innerText=`${windowDblClickCount}`;
     });
+}
 
+function copyToClipboard() {
+    let copyTextElement = document.getElementById("clipboardInput");
+    copyTextElement.select();
+    copyTextElement.setSelectionRange(0, 20);
+    navigator.clipboard.writeText(copyTextElement.value);
+    navigator.clipboard.readText().then((text)=>{
+        alert("Copied: "+text+"\nLength: "+text.length);
+    }).catch((error)=>{
+        console.log("Could not copy"+error);
+    });
+}
+
+function copyAndShareTextWithURL(){
+    let textToBeSharedElement = document.getElementById("textToBeShared");
+    textToBeSharedElement.select();
+    textToBeSharedElement.setSelectionRange(0,99999);
+    navigator.clipboard.writeText(textToBeSharedElement.value);
+    navigator.clipboard.readText().then((text)=>{
+        const shareData = {
+            title: 'ShareData',
+            text: text,
+            url: window.location.href
+          }
+        navigator.share(shareData);
+    }).catch((error)=>{
+        console.log("Could not copy and Share"+error);
+    });
+}
+
+function getLocation(){
+    navigator.geolocation.getCurrentPosition((position)=>{
+        let locationTextElement = document.getElementById('locationText')
+        
+        locationTextElement.innerText=`
+        ( latitude=${position.coords.latitude}, longitude="${position.coords.longitude} )
+        `;
+    },(error)=>{
+        console.log(error);
+    })
 }
