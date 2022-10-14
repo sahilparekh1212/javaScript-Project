@@ -99,7 +99,7 @@ function createAccordianItem(totalDiv){
         `;    
         if(i===0){
             accordianHTML+=`
-                <div id="accordionCollapse${i}" class="accordion-collapse collapse border border-dark rounded"
+                <div id="accordionCollapse${i}" class="accordion-collapse border border-dark rounded"
                     aria-labelledby="accordionHeading${i}">
                     <div class="accordion-body">
                         ${eventsDashboard()}
@@ -108,7 +108,7 @@ function createAccordianItem(totalDiv){
             `;
         }else if(i===1){
             accordianHTML+=`
-                <div id="accordionCollapse${i}" class="accordion-collapse collapse border border-dark rounded"
+                <div id="accordionCollapse${i}" class="accordion-collapse border border-dark rounded"
                     aria-labelledby="accordionHeading${i}">
                     <div class="accordion-body">
                         ${applicationDashboard()}
