@@ -10,7 +10,7 @@ function updateBody() {
     body.classList.add('bg-light','text-dark');
     body.innerHTML = `
     <header></header>
-    <main ></main>
+    <main></main>
     <footer></footer>
     `;
     updateHeader();
@@ -133,40 +133,42 @@ function createAccordianItem(totalDiv){
 
 function eventsDashboard(){
     let itemHTML=`
-        <div class="row">
+        <div class="row justify-content-around">
 
-            <div class="card col-md-2 m-2 bg-dark text-light" id="mousePointerPositionTracker">
+            <div class="card col-md-3 bg-dark text-light" id="clipboard">
                 <div class="card-body">
-                    <h5 class="card-title">Pointer Display</h5>
-                    <div id="mousePointerPositionTrackerText"></div>
-                </div>
-            </div>
-
-            <div class="card col-md-3 m-2 bg-dark text-light" id="clickCounter">
-                <div class="card-body">
-                    <h5 class="card-title">Clicks Logger</h5>
-                    <div class="d-flex">
-                        <div>click= <span id="windowClickCounterText" class="p-2">0</span></div>
-                        <div>dblClick= <span id="windowDblClickCounterText" class="p-2">0</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card col-md-3 m-2 bg-dark text-light" id="clipboard">
-                <div class="card-body">
-                    <h5 class="card-title" style="width: 100%;">Copy To Clipboard</h5>
+                    <h5 class="card-title">Copy To Clipboard</h5>
                     <input id="clipboardInput" type="text" value="Sample Text" maxlength="20" style="max-width:70%" class="rounded p-1">
                     <button id="clipboardIcon" onclick="copyToClipboard()" class="bi bi-clipboard rounded p-1"> Copy</button>
                 </div>
             </div>
 
-            <div class="card col-md-3 m-2 bg-dark text-light" id="hoverToggle">
+            <div class="card col-md-3 bg-dark text-light">
                 <div class="card-body">
-                    <h5 class="card-title">Hover Toggle Card</h5>
-                    <p>Lorem cing el eius nihil?</p>
+                    <h5 class="card-title">Share Text</h5>
+                    <div>        
+                        <input class="bg-light text-dark rounded p-1" id="textToBeShared" type="text" value="Text To Be Shared" style="max-width:65%">
+                        <button onclick="copyAndShareTextWithURL()" class="bi bi-share rounded p-1"> Share</button>
+                    </div>
                 </div>
             </div>
 
+            <div class="card col-md-2 bg-dark text-light" id="hoverToggle">
+                <div class="card-body">
+                    <h5 class="card-title">Hover Toggle</h5>
+                    <p>Lorem cingnihil?</p>
+                </div>
+            </div>
+
+            <div class="card col-md-3 bg-dark text-light">
+                <div class="card-body">
+                    <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
+                    <div>
+                        <span id="volumeChangeText">Press Volume Up/Down Key</span>
+                    </div>
+                </div>
+            </div>
+    
         </div>
     `;
     return itemHTML;
@@ -175,28 +177,46 @@ function eventsDashboard(){
 function applicationDashboard(){
     let accordianHTML=``;
     accordianHTML+=`
-    <div class="row">
+    <div class="row justify-content-around">
 
-        <div class="card col-md-3 m-2 bg-dark text-light">
+        <div class="card col-md-2 bg-dark text-light" id="mousePointerPositionTracker">
             <div class="card-body">
-                <h5 class="card-title" style="width: 100%;">Share Text</h5>
-                <div>        
-                    <input class="bg-light text-dark rounded p-1" id="textToBeShared" type="text" value="Text To Be Shared" style="max-width:65%">
-                    <button onclick="copyAndShareTextWithURL()" class="bi bi-share rounded p-1"> Share</button>
+                <h5 class="card-title">Pointer Display</h5>
+                <div id="mousePointerPositionTrackerText"></div>
+            </div>
+        </div>
+
+        <div class="card col-md-2 bg-dark text-light" id="clickCounter">
+            <div class="card-body">
+                <h5 class="card-title">Clicks Logger</h5>
+                <div>
+                    <div>click= <span id="windowClickCounterText" class="p-2">0</span></div>
+                    <div>dblClick= <span id="windowDblClickCounterText" class="p-2">0</span></div>
                 </div>
             </div>
         </div>
 
-        <div class="card col-md-4 m-2 bg-dark text-light">
+        <div class="card col-md-3 bg-dark text-light">
             <div class="card-body">
-                <h5 class="card-title" style="width: 100%;">Get Location</h5>
+                <h5 class="card-title">Get Location</h5>
                 <div>
                     <button onclick="getLocation()" class="bi bi-geo-alt rounded p-1"> Location</button>
                     <span id="locationText"></span>
                 </div>
             </div>
         </div>
-    
+
+        <div class="card col-md-2 bg-dark text-light">
+            <div class="card-body">
+                <h5 class="card-title">Live Battery Info</h5>
+                <div>
+                    <button onclick="getBattery(showBatteryLevelAndCharging)" class="bi bi-battery rounded p-1"> Battery</button>
+                    <span id="batteryLevelText"></span>
+                    <span id="batteryChargingText"></span>
+                </div>
+            </div>
+        </div>
+
     </div>
     `;
     return accordianHTML;
@@ -235,6 +255,8 @@ function addDOMEvents(){
         windowDblClickCount++;
         windowDblClickCounterElement.innerText=`${windowDblClickCount}`;
     });
+
+    volumeChange();
 }
 
 function copyToClipboard() {
@@ -271,9 +293,43 @@ function getLocation(){
         let locationTextElement = document.getElementById('locationText')
         
         locationTextElement.innerText=`
-        ( latitude=${position.coords.latitude}, longitude="${position.coords.longitude} )
+        latitude= ${position.coords.latitude} ,\n longitude= ${position.coords.longitude}
         `;
     },(error)=>{
         console.log(error);
-    })
+    });
+}
+
+function getBattery(functionName){
+    navigator.getBattery().then((battery)=>{
+        battery.addEventListener('chargingchange',(event)=>{
+            functionName(event.currentTarget.level,event.currentTarget.charging);
+        });
+        battery.addEventListener('levelchange',(event)=>{
+            functionName(event.currentTarget.level,event.currentTarget.charging);
+        });
+        functionName(battery.level,battery.charging);   
+
+    }).catch((error)=>{
+        console.log("getBattery() > error= "+error);
+    });
+}
+
+function showBatteryLevelAndCharging(level,charging){
+    document.getElementById('batteryLevelText').innerText = `chargeLevel = ${level*100}% ,`;
+    document.getElementById('batteryChargingText').innerText =`\nis charging ? = ${charging ? 'Yes' : 'No'}`; 
+}
+
+function volumeChange(){
+    window.addEventListener('keydown',(event)=>{
+        var volumeChangeTextElement = document.getElementById('volumeChangeText');
+        volumeChangeTextElement.innerText=`Key pressed: Volume`;
+        if(event.key==="AudioVolumeDown"){
+            volumeChangeTextElement.innerText+=` Down (-)`;
+        }else if(event.key==="AudioVolumeUp"){
+            volumeChangeTextElement.innerText+=` Up (+)`;
+        }else{
+            volumeChangeTextElement.innerText="Press Volume Up/Down Key";
+        }
+    });
 }
