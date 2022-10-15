@@ -48,7 +48,9 @@ function updateMain() {
     main.classList.add('container','p-3');
     main.innerHTML=`
         <div class="container">
-
+            <div style="position:fixed; right:15px; bottom:15px; z-index:100;">
+                <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>    
+            </div>
             <div class="row d-flex">
             
                 <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
@@ -137,7 +139,6 @@ function updateMain() {
                         </div>
                     </div>
                 </div>
-
 
             </div>
 
@@ -311,4 +312,8 @@ function countDifference(input){
         }
         displayCount--;
     },1000);
+}
+
+function scrollToTop(){
+    window.scroll(0,0);
 }
