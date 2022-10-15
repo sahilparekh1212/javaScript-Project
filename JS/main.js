@@ -7,7 +7,7 @@ window.onload = function () {
 
 function updateBody() {
     const body = document.querySelector('body');
-    body.classList.add('bg-light','text-dark');
+    body.classList.add('bg-dark','text-light');
     body.innerHTML = `
     <header></header>
     <main></main>
@@ -24,20 +24,20 @@ function updateHeader() {
     header.innerHTML = `
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="#" class="navbar-brand">javaScript Project</a>
+                <span href="#" class="navbar-brand">javaScript Project</span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuItems">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="menuItems">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">A</a>
+                            <a href="#" class="nav-link text-light">A</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">B</a>
+                            <a href="#" class="nav-link text-light">B</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">C</a>
+                            <a href="#" class="nav-link text-light">C</a>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +49,91 @@ function updateHeader() {
 function updateMain() {
     const main = document.querySelector('main');
     main.classList.add('container','p-3');
-    main.innerHTML= createAccordianItem(2);
+    main.innerHTML=`
+        <div class="container">
+
+            <div class="row d-flex">
+            
+                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                    <div class="card-body">
+                        <h5 class="card-title">Copy To Clipboard</h5>
+                        <input id="clipboardInput" type="text" value="Sample Text" maxlength="20" style="max-width:70%"
+                            class="rounded p-1">
+                        <button id="clipboardIcon" onclick="copyToClipboard()" class="bi bi-clipboard rounded p-1">
+                            Copy</button>
+                    </div>
+                </div>
+
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Share Text</h5>
+                        <div>
+                            <input class="bg-light text-dark rounded p-1" id="textToBeShared" type="text"
+                                value="Text To Be Shared" style="max-width:65%">
+                            <button onclick="copyAndShareTextWithURL()" class="bi bi-share rounded p-1"> Share</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-2 m-2 bg-light text-dark" id="hoverToggle">
+                    <div class="card-body">
+                        <h5 class="card-title">Hover Toggle</h5>
+                        <p>Lorem cingnihil?</p>
+                    </div>
+                </div>
+
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
+                        <div>
+                            <span id="volumeChangeText">Press Volume Up/Down Key</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-2 m-2 bg-light text-dark" id="mousePointerPositionTracker">
+                    <div class="card-body">
+                        <h5 class="card-title">Pointer Display</h5>
+                        <div id="mousePointerPositionTrackerText"></div>
+                    </div>
+                </div>
+
+                <div class="card col-md-2 m-2 bg-light text-dark" id="clickCounter">
+                    <div class="card-body">
+                        <h5 class="card-title">Clicks Logger</h5>
+                        <div>
+                            <div>click= <span id="windowClickCounterText" class="p-2">0</span></div>
+                            <div>dblClick= <span id="windowDblClickCounterText" class="p-2">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Get Location</h5>
+                        <div>
+                            <button onclick="getLocation()" class="bi bi-geo-alt rounded p-1"> Location</button>
+                            <span id="locationText"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-2 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Live Battery Info</h5>
+                        <div>
+                            <button onclick="getBattery(showBatteryLevelAndCharging)" class="bi bi-battery rounded p-1">
+                                Battery</button>
+                            <span id="batteryLevelText"></span>
+                            <span id="batteryChargingText"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    `;
 }
 
 function updateFooter() {
@@ -61,9 +145,9 @@ function updateFooter() {
                     <span class="my-auto p-3">Follow Us:</span>
                 </div>
                 <div class="col-md-3 p-2 my-auto justify-content-around">        
-                    <a href="https://www.youtube.com/" target="_blank"><i class="bi-youtube p-3" aria-hidden="true"></i></a>
-                    <a href="https://twitter.com/?lang=en" target="_blank"><i class="bi-twitter p-3" aria-hidden="true"></i></a>
-                    <a href="https://www.instagram.com/" target="_blank"><i class="bi-instagram p-3" aria-hidden="true"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank"><i class="bi-youtube p-3 text-light" aria-hidden="true"></i></a>
+                    <a href="https://twitter.com/?lang=en" target="_blank"><i class="bi-twitter p-3 text-light" aria-hidden="true"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="bi-instagram p-3 text-light" aria-hidden="true"></i></a>
                 </div>
             </div>
             <div class="row d-flex">
@@ -71,155 +155,16 @@ function updateFooter() {
                     <span class="my-auto p-3">Logo</span>
                 </div>
                 <div class="col-md-5 p-2 my-auto justify-content-around">        
-                    <a href="#" target="_blank" class="text-decoration-none"><span class="p-3">Privacy and Terms</span></a>
-                    <a href="#" target="_blank" class="text-decoration-none"><span class="p-3">About Us</span></a>
-                    <a href="#" target="_blank" class="text-decoration-none"><span class="p-3">Our Products</span></a>
+                    <a href="#" target="_blank" class="text-decoration-none text-light"><span class="p-3">Privacy and Terms</span></a>
+                    <a href="#" target="_blank" class="text-decoration-none text-light"><span class="p-3">About Us</span></a>
+                    <a href="#" target="_blank" class="text-decoration-none text-light"><span class="p-3">Our Products</span></a>
                 </div>
                 <div class="col-md-5 p-2">        
-                    <a href="#" target="_blank" class="text-decoration-none"><i class="bi bi-question p-2" aria-hidden="true"></i><span>Help</span></a>
+                    <a href="#" target="_blank" class="text-decoration-none text-light"><i class="bi bi-question p-2" aria-hidden="true"></i><span>Help</span></a>
                 </div>
             </div>
         </div>
     `;
-}
-
-function createAccordianItem(totalDiv){
-    let accordianHTML=``;
-    for(i=0;i<totalDiv;i++){
-        accordianHTML+=`
-            <div class="accordion-item bg-light text-dark ">
-                <h2 class="accordion-header" id="accordionHeading${i}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#accordionCollapse${i}" aria-expanded="false"
-                        aria-controls="accordionCollapse${i}">
-                        Dashboard ${i+1}
-                    </button>
-                </h2>
-            </div>
-        `;    
-        if(i===0){
-            accordianHTML+=`
-                <div id="accordionCollapse${i}" class="accordion-collapse border border-dark rounded"
-                    aria-labelledby="accordionHeading${i}">
-                    <div class="accordion-body">
-                        ${eventsDashboard()}
-                    </div>
-                </div>
-            `;
-        }else if(i===1){
-            accordianHTML+=`
-                <div id="accordionCollapse${i}" class="accordion-collapse border border-dark rounded"
-                    aria-labelledby="accordionHeading${i}">
-                    <div class="accordion-body">
-                        ${applicationDashboard()}
-                    </div>
-                </div>
-            `;
-        }else{
-            accordianHTML+=`
-                <div id="accordionCollapse${i}" class="accordion-collapse collapse border border-dark rounded"
-                    aria-labelledby="accordionHeading${i}">
-                    <div class="accordion-body">
-                        TBD
-                    </div>
-                </div>
-            `;
-        }
-    } 
-
-
-    return accordianHTML;
-}
-
-function eventsDashboard(){
-    let itemHTML=`
-        <div class="row justify-content-around">
-
-            <div class="card col-md-3 bg-dark text-light" id="clipboard">
-                <div class="card-body">
-                    <h5 class="card-title">Copy To Clipboard</h5>
-                    <input id="clipboardInput" type="text" value="Sample Text" maxlength="20" style="max-width:70%" class="rounded p-1">
-                    <button id="clipboardIcon" onclick="copyToClipboard()" class="bi bi-clipboard rounded p-1"> Copy</button>
-                </div>
-            </div>
-
-            <div class="card col-md-3 bg-dark text-light">
-                <div class="card-body">
-                    <h5 class="card-title">Share Text</h5>
-                    <div>        
-                        <input class="bg-light text-dark rounded p-1" id="textToBeShared" type="text" value="Text To Be Shared" style="max-width:65%">
-                        <button onclick="copyAndShareTextWithURL()" class="bi bi-share rounded p-1"> Share</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card col-md-2 bg-dark text-light" id="hoverToggle">
-                <div class="card-body">
-                    <h5 class="card-title">Hover Toggle</h5>
-                    <p>Lorem cingnihil?</p>
-                </div>
-            </div>
-
-            <div class="card col-md-3 bg-dark text-light">
-                <div class="card-body">
-                    <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
-                    <div>
-                        <span id="volumeChangeText">Press Volume Up/Down Key</span>
-                    </div>
-                </div>
-            </div>
-    
-        </div>
-    `;
-    return itemHTML;
-}
-
-function applicationDashboard(){
-    let accordianHTML=``;
-    accordianHTML+=`
-    <div class="row justify-content-around">
-
-        <div class="card col-md-2 bg-dark text-light" id="mousePointerPositionTracker">
-            <div class="card-body">
-                <h5 class="card-title">Pointer Display</h5>
-                <div id="mousePointerPositionTrackerText"></div>
-            </div>
-        </div>
-
-        <div class="card col-md-2 bg-dark text-light" id="clickCounter">
-            <div class="card-body">
-                <h5 class="card-title">Clicks Logger</h5>
-                <div>
-                    <div>click= <span id="windowClickCounterText" class="p-2">0</span></div>
-                    <div>dblClick= <span id="windowDblClickCounterText" class="p-2">0</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card col-md-3 bg-dark text-light">
-            <div class="card-body">
-                <h5 class="card-title">Get Location</h5>
-                <div>
-                    <button onclick="getLocation()" class="bi bi-geo-alt rounded p-1"> Location</button>
-                    <span id="locationText"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="card col-md-2 bg-dark text-light">
-            <div class="card-body">
-                <h5 class="card-title">Live Battery Info</h5>
-                <div>
-                    <button onclick="getBattery(showBatteryLevelAndCharging)" class="bi bi-battery rounded p-1"> Battery</button>
-                    <span id="batteryLevelText"></span>
-                    <span id="batteryChargingText"></span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    `;
-    return accordianHTML;
 }
 
 function addDOMEvents(){
@@ -234,14 +179,12 @@ function addDOMEvents(){
 
     let hoverToggle=document.getElementById('hoverToggle');
     hoverToggle.addEventListener('mouseenter',()=>{
-        hoverToggle.classList.toggle('bg-dark');
-        hoverToggle.classList.toggle('text-light');
-        hoverToggle.classList.add('text-dark');
+        hoverToggle.classList.remove('bg-light','text-dark');
+        hoverToggle.classList.add('bg-dark','text-light');
     });
     hoverToggle.addEventListener('mouseleave',()=>{
-        hoverToggle.classList.toggle('bg-dark');
-        hoverToggle.classList.toggle('text-light');
-        hoverToggle.classList.toggle('text-dark');
+        hoverToggle.classList.remove('bg-dark','text-light');
+        hoverToggle.classList.add('bg-light','text-dark');
     });
 
     let windowClickCounterElement = document.getElementById('windowClickCounterText');
