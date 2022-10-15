@@ -1,6 +1,3 @@
-var windowClickCount=0;
-var windowDblClickCount=0;
-
 window.onload = function () {
     updateBody();
 }
@@ -200,6 +197,8 @@ function addDOMEvents(){
     });
 
     let windowClickCounterElement = document.getElementById('windowClickCounterText');
+    let windowClickCount=0;
+    let windowDblClickCount=0;
     window.addEventListener('click',()=>{
         windowClickCount++;
         windowClickCounterElement.innerText=`${windowClickCount}`;
@@ -277,7 +276,7 @@ function showBatteryLevelAndCharging(level,charging){
 
 function volumeChange(){
     window.addEventListener('keydown',(event)=>{
-        var volumeChangeTextElement = document.getElementById('volumeChangeText');
+        let volumeChangeTextElement = document.getElementById('volumeChangeText');
         volumeChangeTextElement.innerText=`Key pressed: Volume`;
         if(event.key==="AudioVolumeDown"){
             volumeChangeTextElement.innerText+=` Down (-)`;
@@ -292,7 +291,7 @@ function volumeChange(){
 function countDifference(input){
     let countDifferenceTextEle = document.getElementById('countDifferenceText');
     let refDate = Date.parse(input);
-    var displayCount=5;
+    let displayCount=5;
     setInterval(()=>{
         if(displayCount>0){
             let diff=Date.now()-refDate;
