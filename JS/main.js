@@ -178,7 +178,7 @@ function updateFooter() {
 
 function addDOMEvents(){
 
-    let mousePointerPositionTrackerTextElement=document.getElementById('mousePointerPositionTrackerText');
+    const mousePointerPositionTrackerTextElement=document.getElementById('mousePointerPositionTrackerText');
     window.addEventListener('mousemove',(event)=>{
         mousePointerPositionTrackerTextElement.innerHTML=`
             <span class="p-2">pageX= ${event.pageX}</span>
@@ -186,7 +186,7 @@ function addDOMEvents(){
         `;
     });
 
-    let hoverToggle=document.getElementById('hoverToggle');
+    const hoverToggle=document.getElementById('hoverToggle');
     hoverToggle.addEventListener('mouseenter',()=>{
         hoverToggle.classList.remove('bg-light','text-dark');
         hoverToggle.classList.add('bg-dark','text-light');
@@ -196,7 +196,7 @@ function addDOMEvents(){
         hoverToggle.classList.add('bg-light','text-dark');
     });
 
-    let windowClickCounterElement = document.getElementById('windowClickCounterText');
+    const windowClickCounterElement = document.getElementById('windowClickCounterText');
     let windowClickCount=0;
     let windowDblClickCount=0;
     window.addEventListener('click',()=>{
@@ -204,7 +204,7 @@ function addDOMEvents(){
         windowClickCounterElement.innerText=`${windowClickCount}`;
     });
 
-    let windowDblClickCounterElement = document.getElementById('windowDblClickCounterText');
+    const windowDblClickCounterElement = document.getElementById('windowDblClickCounterText');
     window.addEventListener('dblclick',()=>{
         windowDblClickCount++;
         windowDblClickCounterElement.innerText=`${windowDblClickCount}`;
@@ -214,7 +214,7 @@ function addDOMEvents(){
 }
 
 function copyToClipboard() {
-    let copyTextElement = document.getElementById("clipboardInput");
+    const copyTextElement = document.getElementById("clipboardInput");
     copyTextElement.select();
     copyTextElement.setSelectionRange(0, 20);
     navigator.clipboard.writeText(copyTextElement.value);
@@ -226,7 +226,7 @@ function copyToClipboard() {
 }
 
 function copyAndShareTextWithURL(){
-    let textToBeSharedElement = document.getElementById("textToBeShared");
+    const textToBeSharedElement = document.getElementById("textToBeShared");
     textToBeSharedElement.select();
     textToBeSharedElement.setSelectionRange(0,99999);
     navigator.clipboard.writeText(textToBeSharedElement.value);
@@ -244,7 +244,7 @@ function copyAndShareTextWithURL(){
 
 function getLocation(){
     navigator.geolocation.getCurrentPosition((position)=>{
-        let locationTextElement = document.getElementById('locationText')
+        const locationTextElement = document.getElementById('locationText')
         
         locationTextElement.innerText=`
         latitude= ${position.coords.latitude} ,\n longitude= ${position.coords.longitude}
@@ -276,7 +276,7 @@ function showBatteryLevelAndCharging(level,charging){
 
 function volumeChange(){
     window.addEventListener('keydown',(event)=>{
-        let volumeChangeTextElement = document.getElementById('volumeChangeText');
+        const volumeChangeTextElement = document.getElementById('volumeChangeText');
         volumeChangeTextElement.innerText=`Key pressed: Volume`;
         if(event.key==="AudioVolumeDown"){
             volumeChangeTextElement.innerText+=` Down (-)`;
@@ -289,16 +289,16 @@ function volumeChange(){
 }
 
 function countDifference(input){
-    let countDifferenceTextEle = document.getElementById('countDifferenceText');
-    let refDate = Date.parse(input);
+    const countDifferenceTextEle = document.getElementById('countDifferenceText');
+    const refDate = Date.parse(input);
     let displayCount=5;
     setInterval(()=>{
         if(displayCount>0){
-            let diff=Date.now()-refDate;
-            let days=Math.floor(diff/(1000*24*60*60));
-            let hr=Math.floor((diff%(1000*24*60*60))/(1000*60*60));
-            let min=Math.floor((diff%(1000*60*60))/(1000*60));
-            let sec=Math.floor((diff%(1000*60))/(1000));
+            const diff=Date.now()-refDate;
+            const days=Math.floor(diff/(1000*24*60*60));
+            const hr=Math.floor((diff%(1000*24*60*60))/(1000*60*60));
+            const min=Math.floor((diff%(1000*60*60))/(1000*60));
+            const sec=Math.floor((diff%(1000*60))/(1000));
             if(diff<0){
                 countDifferenceTextEle.innerHTML=`Time Remaining<span> : ${Math.abs(days)} d, ${Math.abs(hr)} h, ${Math.abs(min)} m,  ${Math.abs(sec)} s</span>`;
             }else{
@@ -307,6 +307,7 @@ function countDifference(input){
         }else{
             countDifferenceTextEle.innerHTML=``;
             document.getElementById('countDifferenceInput').value=0;
+            return;
         }
         displayCount--;
     },1000);
