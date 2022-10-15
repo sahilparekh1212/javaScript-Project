@@ -48,11 +48,38 @@ function updateMain() {
     main.classList.add('container','p-3');
     main.innerHTML=`
         <div class="container">
+
             <div style="position:fixed; right:15px; bottom:15px; z-index:100;">
                 <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>    
             </div>
-            <div class="row d-flex">
             
+            <div class="row d-flex">
+                
+                <div class="card col-md-2 m-2 bg-light text-dark" id="hoverToggle">
+                    <div class="card-body">
+                        <h5 class="card-title">Hover Toggle</h5>
+                        <p>Lorem cingnihil?</p>
+                    </div>
+                </div>
+
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title bi bi-keyboard"> View CapsLock State</h5>
+                        <div>
+                            <span id="capsLockText">Press CapsLock Key</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
+                        <div>
+                            <span id="volumeChangeText">Press Volume Up/Down Key</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
                     <div class="card-body">
                         <h5 class="card-title">Copy To Clipboard</h5>
@@ -70,22 +97,6 @@ function updateMain() {
                             <input class="bg-light text-dark rounded p-1" id="textToBeShared" type="text"
                                 value="Text To Be Shared" style="max-width:65%">
                             <button onclick="copyAndShareTextWithURL()" class="bi bi-share rounded p-1"> Share</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card col-md-2 m-2 bg-light text-dark" id="hoverToggle">
-                    <div class="card-body">
-                        <h5 class="card-title">Hover Toggle</h5>
-                        <p>Lorem cingnihil?</p>
-                    </div>
-                </div>
-
-                <div class="card col-md-3 m-2 bg-light text-dark">
-                    <div class="card-body">
-                        <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
-                        <div>
-                            <span id="volumeChangeText">Press Volume Up/Down Key</span>
                         </div>
                     </div>
                 </div>
@@ -179,6 +190,8 @@ function updateFooter() {
 
 function addDOMEvents(){
 
+    beforeunload();
+
     const mousePointerPositionTrackerTextElement=document.getElementById('mousePointerPositionTrackerText');
     window.addEventListener('mousemove',(event)=>{
         mousePointerPositionTrackerTextElement.innerHTML=`
@@ -212,6 +225,8 @@ function addDOMEvents(){
     });
 
     volumeChange();
+
+    capsLockDisplay();
 }
 
 function copyToClipboard() {
@@ -281,8 +296,14 @@ function volumeChange(){
         volumeChangeTextElement.innerText=`Key pressed: Volume`;
         if(event.key==="AudioVolumeDown"){
             volumeChangeTextElement.innerText+=` Down (-)`;
+            setTimeout(()=>{
+                volumeChangeTextElement.innerText="Press Volume Up/Down Key";
+            },3000);
         }else if(event.key==="AudioVolumeUp"){
             volumeChangeTextElement.innerText+=` Up (+)`;
+            setTimeout(()=>{
+                volumeChangeTextElement.innerText="Press Volume Up/Down Key";
+            },3000);
         }else{
             volumeChangeTextElement.innerText="Press Volume Up/Down Key";
         }
@@ -308,7 +329,6 @@ function countDifference(input){
         }else{
             countDifferenceTextEle.innerHTML=``;
             document.getElementById('countDifferenceInput').value=0;
-            return;
         }
         displayCount--;
     },1000);
@@ -316,4 +336,28 @@ function countDifference(input){
 
 function scrollToTop(){
     window.scroll(0,0);
+}
+
+function capsLockDisplay(){
+    window.addEventListener('keyup',(event)=>{
+        if(event.key=="CapsLock" && event.getModifierState("CapsLock")){
+            document.getElementById('capsLockText').innerHTML=`CAPSLOCK is ON`;
+            setTimeout(()=>{
+                document.getElementById('capsLockText').innerHTML=`Press CapsLock Key`;
+            },3000);
+
+        }else if(event.key=="CapsLock" && !event.getModifierState("CapsLock")){
+            document.getElementById('capsLockText').innerHTML=`Capslock is off`;
+            setTimeout(()=>{
+                document.getElementById('capsLockText').innerHTML=`Press CapsLock Key`;
+            },3000);
+        }
+    })
+}
+
+function beforeunload(){
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        e.returnValue = '';
+    });
 }
