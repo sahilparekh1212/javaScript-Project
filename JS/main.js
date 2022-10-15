@@ -130,6 +130,18 @@ function updateMain() {
                     </div>
                 </div>
 
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Get Time Difference</h5>
+                        <div>
+                            <span>Pick a Date:</span>
+                            <input oninput="countDifference(this.value)" class="bg-light text-dark rounded p-1" id="countDifferenceInput" type="date">
+                            <p id="countDifferenceText"></p>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -275,4 +287,28 @@ function volumeChange(){
             volumeChangeTextElement.innerText="Press Volume Up/Down Key";
         }
     });
+}
+
+function countDifference(input){
+    let countDifferenceTextEle = document.getElementById('countDifferenceText');
+    let refDate = Date.parse(input);
+    var displayCount=5;
+    setInterval(()=>{
+        if(displayCount>0){
+            let diff=Date.now()-refDate;
+            let days=Math.floor(diff/(1000*24*60*60));
+            let hr=Math.floor((diff%(1000*24*60*60))/(1000*60*60));
+            let min=Math.floor((diff%(1000*60*60))/(1000*60));
+            let sec=Math.floor((diff%(1000*60))/(1000));
+            if(diff<0){
+                countDifferenceTextEle.innerHTML=`Time Remaining<span> : ${Math.abs(days)} d, ${Math.abs(hr)} h, ${Math.abs(min)} m,  ${Math.abs(sec)} s</span>`;
+            }else{
+                countDifferenceTextEle.innerHTML=`Time Elapsed<span> : ${days} d, ${hr} h, ${min} m, ${sec} s</span>`;   
+            }
+        }else{
+            countDifferenceTextEle.innerHTML=``;
+            document.getElementById('countDifferenceInput').value=0;
+        }
+        displayCount--;
+    },1000);
 }
