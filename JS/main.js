@@ -1,3 +1,7 @@
+let pageX;
+let pageY;
+let newWindow;
+
 window.onload = function () {
     updateBody();
 }
@@ -151,6 +155,17 @@ function updateMain() {
                     </div>
                 </div>
 
+                <div class="card col-md-3 m-2 bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title"> Open New Window</h5>
+                        <div class="d-flex">                        
+                            <div>Width: <input class="bg-light text-dark rounded p-1 m-1" type="number" value="300" style="max-width:70px" id="newWindowWidth" ></div>
+                            <div>Height: <input class="bg-light text-dark rounded p-1" type="number" value="300" style="max-width:70px" id="newWindowHeight"></div>
+                        </div>
+                        <button id="openNewWindowButton" onclick="openCustomWindow()" class="bi bi-box-arrow-up-right rounded p-1 m-1" style="width:100%">  Open</button>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -194,15 +209,19 @@ function addDOMEvents(){
 
     const mousePointerPositionTrackerTextElement=document.getElementById('mousePointerPositionTrackerText');
     window.addEventListener('mousemove',(event)=>{
+        pageX=event.pageX;
+        pageY=event.pageY;
         mousePointerPositionTrackerTextElement.innerHTML=`
-            <span class="p-2">pageX= ${event.pageX}</span>
-            <span class="p-2">pageY= ${event.pageY}</span>
+            <span class="p-2">pageX= ${pageX}</span>
+            <span class="p-2">pageY= ${pageY}</span>
         `;
     });
     window.addEventListener('touchmove',(event)=>{
-        mousePointerPositionTrackerTextElement.innerHTML=`
-            <span class="p-2">pageX= ${event.touches[0].pageX.toFixed(2)}</span>
-            <span class="p-2">pageY= ${event.touches[0].pageY.toFixed(2)}</span>
+        pageX=event.touches[0].pageX;     
+        pageY=event.touches[0].pageY;
+        mousePointerPositionTrackerTextElement.innerHTML=` 
+            <span class="p-2">pageX= ${pageX.toFixed(2)}</span>
+            <span class="p-2">pageY= ${pageY.toFixed(2)}</span>
         `;
     });
 
@@ -365,5 +384,12 @@ function beforeunload(){
     window.addEventListener('beforeunload', function (e) {
         e.preventDefault();
         e.returnValue = '';
+        newWindow.close();
     });
+}
+
+function openCustomWindow(){
+    let href = window.location.href;
+    newWindow= window.open(href.substring(0,href.indexOf(':')+1),'popup',`scrollbars=yes,resizable=yes,top=${pageY},left=${pageX},width=${document.getElementById('newWindowWidth').value} , height=${document.getElementById('newWindowHeight').value}`
+    );
 }
