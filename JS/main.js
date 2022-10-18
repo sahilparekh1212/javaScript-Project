@@ -199,6 +199,12 @@ function addDOMEvents(){
             <span class="p-2">pageY= ${event.pageY}</span>
         `;
     });
+    window.addEventListener('touchmove',(event)=>{
+        mousePointerPositionTrackerTextElement.innerHTML=`
+            <span class="p-2">pageX= ${event.touches[0].pageX.toFixed(2)}</span>
+            <span class="p-2">pageY= ${event.touches[0].pageY.toFixed(2)}</span>
+        `;
+    });
 
     const hoverToggle=document.getElementById('hoverToggle');
     hoverToggle.addEventListener('mouseenter',()=>{
