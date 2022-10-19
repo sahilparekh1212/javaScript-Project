@@ -170,6 +170,16 @@ function updateMain() {
                     </div>
                 </div>
 
+                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                    <div class="card-body">
+                        <button id="accordionTitle" onclick="toggleAccordionInfo(this.id)" class="card-title d-flex justify-content-between h5 border-0" style="width:100%">
+                            <div>Accordion</div>
+                            <div id="accordionStatus">+</div>
+                        </button>
+                        <p id="accordionText" class="p-2" style="display:none">Lorem ipsum dolor sit amet consectetur.</p>    
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -400,4 +410,16 @@ function openCustomWindow(){
 
 function printPage(){
     window.print();
+}
+
+function toggleAccordionInfo(id){
+    let accordionTextElement = document.getElementById(id.replace('Title','Text'));
+    let accordionStatusElement = document.getElementById(id.replace('Title','Status'));
+    if(accordionTextElement.style.display==='none'){
+        accordionTextElement.style.display='block';
+        accordionStatusElement.innerHTML='-';
+    }else{
+        accordionTextElement.style.display='none';
+        accordionStatusElement.innerHTML='+';
+    }
 }
