@@ -52,6 +52,10 @@ function updateMain() {
     main.classList.add('container','p-3');
     main.innerHTML=`
         <div class="container">
+            
+            <div style="position:fixed; right:15px; bottom:65px; z-index:100;">
+                <button onclick="printPage()" class="border-0 h2 bi bi-printer bg-dark text-primary"></button>    
+            </div>
 
             <div style="position:fixed; right:15px; bottom:15px; z-index:100;">
                 <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>    
@@ -392,4 +396,8 @@ function openCustomWindow(){
     let href = window.location.href;
     newWindow= window.open(href.substring(0,href.indexOf(':')+1),'popup',`scrollbars=yes,resizable=yes,top=${pageY},left=${pageX},width=${document.getElementById('newWindowWidth').value} , height=${document.getElementById('newWindowHeight').value}`
     );
+}
+
+function printPage(){
+    window.print();
 }
