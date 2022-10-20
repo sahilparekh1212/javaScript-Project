@@ -180,6 +180,22 @@ function updateMain() {
                     </div>
                 </div>
 
+                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                    <div class="card-body">
+                        <h5>Toggle Active Class</h5>
+                        <div class="card-title">
+                            <div class="row">
+                                <button id="tab1" onclick="tabCLicked(this.id)" class="col-4 border-0 p-2 bg-primary">A</button>
+                                <button id="tab2" onclick="tabCLicked(this.id)" class="col-4 border-0 p-2 bg-success">B</button>
+                                <button id="tab3" onclick="tabCLicked(this.id)" class="col-4 border-0 p-2 bg-info">C</button>
+                            </div>
+                            <div id="tabInfo" class="row" style="display:none">
+                            </div>
+                        </div>
+                        <p id="accordionText" class="p-2" style="display:none">Lorem ipsum dolor sit amet consectetur.</p>    
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -422,4 +438,20 @@ function toggleAccordionInfo(id){
         accordionTextElement.style.display='none';
         accordionStatusElement.innerHTML='+';
     }
+}
+
+function tabCLicked(id){
+    let tabClickedEle = document.getElementById(id);
+    allTabsArray=[{'id':'tab1','background':'bg-primary'},{'id':'tab2','background':'bg-success'},{'id':'tab3','background':'bg-info'}];
+    let tabInfoEle=document.getElementById('tabInfo');
+    allTabsArray.forEach((currentLoopTab)=>{
+        let currentLoopTabElement=document.getElementById(currentLoopTab.id);
+        if(currentLoopTabElement.id===tabClickedEle.id && !(currentLoopTabElement.classList.contains('text-light'))){
+            currentLoopTabElement.classList.add('text-light');
+            tabInfoEle.innerHTML=`<div class="${currentLoopTab.background} p-3 col-12"></div>`;
+            tabInfoEle.style.display='block';
+        }else if(currentLoopTabElement.id!==tabClickedEle.id && (currentLoopTabElement.classList.contains('text-light'))){
+            currentLoopTabElement.classList.remove('text-light');
+        }
+    });
 }
