@@ -1,6 +1,4 @@
-let pageX;
-let pageY;
-let newWindow;
+let pageX, pageY, newWindow;
 let currentSlide = 1;
 
 window.onload = function () {
@@ -203,13 +201,13 @@ function updateMain() {
                             Slide Display
                         </div>
                         <div class="d-flex justify-content-around">
-                            <button onclick="slideDisplay(-1)" class="slideControl p-2 bg-secondary text-light border-0"><</button>
+                            <button onclick="slideDisplay(-1)" class="slideControl p-2 bg-secondary text-light border-0">&lt;</button>
                             <div id="slides" style="width:100%;">
                                 <div class="bg-primary" style="height:5rem;"></div>
                                 <div class="bg-success" style="height:5rem;"></div>
                                 <div class="bg-info" style="height:5rem;"></div>
                             </div>
-                            <button onclick="slideDisplay(1)" class="slideControl p-2 bg-secondary text-light border-0">></button>
+                            <button onclick="slideDisplay(1)" class="slideControl p-2 bg-secondary text-light border-0">&gt;</button>
                         </div>
                         <div id="currentSlideIndicator" class="d-flex justify-content-center">
                             <span class="p-1 m-2" style="border-radius:50%; border:1px solid black;"></span>
