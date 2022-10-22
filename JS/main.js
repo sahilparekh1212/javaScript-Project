@@ -1,6 +1,7 @@
 let pageX;
 let pageY;
 let newWindow;
+let currentSlide = 1;
 
 window.onload = function () {
     updateBody();
@@ -196,6 +197,28 @@ function updateMain() {
                     </div>
                 </div>
 
+                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                    <div class="card-body" style="position:relative;">
+                        <div class="card-title h5";>
+                            Slide Display
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <button onclick="slideDisplay(-1)" class="slideControl p-2 bg-secondary text-light border-0"><</button>
+                            <div id="slides" style="width:100%;">
+                                <div class="bg-primary" style="height:5rem;"></div>
+                                <div class="bg-success" style="height:5rem;"></div>
+                                <div class="bg-info" style="height:5rem;"></div>
+                            </div>
+                            <button onclick="slideDisplay(1)" class="slideControl p-2 bg-secondary text-light border-0">></button>
+                        </div>
+                        <div id="currentSlideIndicator" class="d-flex justify-content-center">
+                            <span class="p-1 m-2" style="border-radius:50%; border:1px solid black;"></span>
+                            <span class="p-1 m-2" style="border-radius:50%; border:1px solid black;"></span>
+                            <span class="p-1 m-2" style="border-radius:50%; border:1px solid black;"></span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -284,6 +307,8 @@ function addDOMEvents(){
     capsLockDisplay();
 
     tabClicked('tab1');
+
+    slideDisplay(0);
 }
 
 function copyToClipboard() {
@@ -456,4 +481,25 @@ function tabClicked(id){
             currentLoopTabElement.classList.remove('text-light');
         }
     });
+}
+
+function slideDisplay(input){
+    let slides = document.getElementById('slides').children;
+    currentSlide+=input;
+
+    if(currentSlide > slides.length){
+        currentSlide=1;
+    }else if(currentSlide<=0){
+        currentSlide=slides.length;
+    }
+
+    for(let i=1;i<=slides.length;i++){        
+        if(i!==currentSlide){
+            slides[i-1].style.display='none';
+            document.getElementById('currentSlideIndicator').children[i-1].classList.remove('bg-secondary');
+        }else{
+            slides[i-1].style.display='block';
+            document.getElementById('currentSlideIndicator').children[i-1].classList.add('bg-secondary');
+        }
+    }
 }
