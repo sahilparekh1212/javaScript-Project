@@ -7,7 +7,7 @@ window.onload = function () {
 
 function updateBody() {
     const body = document.querySelector('body');
-    body.classList.add('bg-dark','text-light');
+    body.classList.add('bg-dark', 'text-light');
     body.innerHTML = `
     <header></header>
     <main></main>
@@ -48,8 +48,8 @@ function updateHeader() {
 
 function updateMain() {
     const main = document.querySelector('main');
-    main.classList.add('container','p-3');
-    main.innerHTML=`
+    main.classList.add('container', 'p-3');
+    main.innerHTML = `
         <div class="container">
             
             <div style="position:fixed; right:15px; bottom:65px; z-index:100;">
@@ -224,8 +224,8 @@ function updateMain() {
 }
 
 function updateFooter() {
-    const footer= document.querySelector('footer');
-    footer.innerHTML=`
+    const footer = document.querySelector('footer');
+    footer.innerHTML = `
         <div class="container">
             <div class="row d-flex">
                 <div class="col-md-2 my-auto">
@@ -254,50 +254,50 @@ function updateFooter() {
     `;
 }
 
-function addDOMEvents(){
+function addDOMEvents() {
 
     beforeunload();
 
-    const mousePointerPositionTrackerTextElement=document.getElementById('mousePointerPositionTrackerText');
-    window.addEventListener('mousemove',(event)=>{
-        pageX=event.pageX;
-        pageY=event.pageY;
-        mousePointerPositionTrackerTextElement.innerHTML=`
+    const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
+    window.addEventListener('mousemove', (event) => {
+        pageX = event.pageX;
+        pageY = event.pageY;
+        mousePointerPositionTrackerTextElement.innerHTML = `
             <span class="p-2">pageX= ${pageX}</span>
             <span class="p-2">pageY= ${pageY}</span>
         `;
     });
-    window.addEventListener('touchmove',(event)=>{
-        pageX=event.touches[0].pageX;     
-        pageY=event.touches[0].pageY;
-        mousePointerPositionTrackerTextElement.innerHTML=` 
+    window.addEventListener('touchmove', (event) => {
+        pageX = event.touches[0].pageX;
+        pageY = event.touches[0].pageY;
+        mousePointerPositionTrackerTextElement.innerHTML = ` 
             <span class="p-2">pageX= ${pageX.toFixed(2)}</span>
             <span class="p-2">pageY= ${pageY.toFixed(2)}</span>
         `;
     });
 
-    const hoverToggle=document.getElementById('hoverToggle');
-    hoverToggle.addEventListener('mouseenter',()=>{
-        hoverToggle.classList.remove('bg-light','text-dark');
-        hoverToggle.classList.add('bg-dark','text-light');
+    const hoverToggle = document.getElementById('hoverToggle');
+    hoverToggle.addEventListener('mouseenter', () => {
+        hoverToggle.classList.remove('bg-light', 'text-dark');
+        hoverToggle.classList.add('bg-dark', 'text-light');
     });
-    hoverToggle.addEventListener('mouseleave',()=>{
-        hoverToggle.classList.remove('bg-dark','text-light');
-        hoverToggle.classList.add('bg-light','text-dark');
+    hoverToggle.addEventListener('mouseleave', () => {
+        hoverToggle.classList.remove('bg-dark', 'text-light');
+        hoverToggle.classList.add('bg-light', 'text-dark');
     });
 
     const windowClickCounterElement = document.getElementById('windowClickCounterText');
-    let windowClickCount=0;
-    let windowDblClickCount=0;
-    window.addEventListener('click',()=>{
+    let windowClickCount = 0;
+    let windowDblClickCount = 0;
+    window.addEventListener('click', () => {
         windowClickCount++;
-        windowClickCounterElement.innerText=`${windowClickCount}`;
+        windowClickCounterElement.innerText = `${windowClickCount}`;
     });
 
     const windowDblClickCounterElement = document.getElementById('windowDblClickCounterText');
-    window.addEventListener('dblclick',()=>{
+    window.addEventListener('dblclick', () => {
         windowDblClickCount++;
-        windowDblClickCounterElement.innerText=`${windowDblClickCount}`;
+        windowDblClickCounterElement.innerText = `${windowDblClickCount}`;
     });
 
     volumeChange();
@@ -314,128 +314,128 @@ function copyToClipboard() {
     copyTextElement.select();
     copyTextElement.setSelectionRange(0, 20);
     navigator.clipboard.writeText(copyTextElement.value);
-    navigator.clipboard.readText().then((text)=>{
-        alert("Copied: "+text+"\nLength: "+text.length);
-    }).catch((error)=>{
-        console.log("Could not copy"+error);
+    navigator.clipboard.readText().then((text) => {
+        alert("Copied: " + text + "\nLength: " + text.length);
+    }).catch((error) => {
+        console.log("Could not copy" + error);
     });
 }
 
-function copyAndShareTextWithURL(){
+function copyAndShareTextWithURL() {
     const textToBeSharedElement = document.getElementById("textToBeShared");
     textToBeSharedElement.select();
-    textToBeSharedElement.setSelectionRange(0,99999);
+    textToBeSharedElement.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(textToBeSharedElement.value);
-    navigator.clipboard.readText().then((text)=>{
+    navigator.clipboard.readText().then((text) => {
         const shareData = {
             title: 'ShareData',
             text: text,
             url: window.location.href
-          }
+        }
         navigator.share(shareData);
-    }).catch((error)=>{
-        console.log("Could not copy and Share"+error);
+    }).catch((error) => {
+        console.log("Could not copy and Share" + error);
     });
 }
 
-function getLocation(){
-    navigator.geolocation.getCurrentPosition((position)=>{
+function getLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
         const locationTextElement = document.getElementById('locationText')
-        
-        locationTextElement.innerText=`
+
+        locationTextElement.innerText = `
         latitude= ${position.coords.latitude} ,\n longitude= ${position.coords.longitude}
         `;
-    },(error)=>{
+    }, (error) => {
         console.log(error);
     });
 }
 
-function getBattery(functionName){
-    navigator.getBattery().then((battery)=>{
-        battery.addEventListener('chargingchange',(event)=>{
-            functionName(event.currentTarget.level,event.currentTarget.charging);
+function getBattery(functionName) {
+    navigator.getBattery().then((battery) => {
+        battery.addEventListener('chargingchange', (event) => {
+            functionName(event.currentTarget.level, event.currentTarget.charging);
         });
-        battery.addEventListener('levelchange',(event)=>{
-            functionName(event.currentTarget.level,event.currentTarget.charging);
+        battery.addEventListener('levelchange', (event) => {
+            functionName(event.currentTarget.level, event.currentTarget.charging);
         });
-        functionName(battery.level,battery.charging);   
+        functionName(battery.level, battery.charging);
 
-    }).catch((error)=>{
-        console.log("getBattery() > error= "+error);
+    }).catch((error) => {
+        console.log("getBattery() > error= " + error);
     });
 }
 
-function showBatteryLevelAndCharging(level,charging){
-    document.getElementById('batteryLevelText').innerText = `chargeLevel = ${level*100}% ,`;
-    document.getElementById('batteryChargingText').innerText =`\nis charging ? = ${charging ? 'Yes' : 'No'}`; 
+function showBatteryLevelAndCharging(level, charging) {
+    document.getElementById('batteryLevelText').innerText = `chargeLevel = ${level * 100}% ,`;
+    document.getElementById('batteryChargingText').innerText = `\nis charging ? = ${charging ? 'Yes' : 'No'}`;
 }
 
-function volumeChange(){
-    window.addEventListener('keydown',(event)=>{
+function volumeChange() {
+    window.addEventListener('keydown', (event) => {
         const volumeChangeTextElement = document.getElementById('volumeChangeText');
-        volumeChangeTextElement.innerText=`Key pressed: Volume`;
-        if(event.key==="AudioVolumeDown"){
-            volumeChangeTextElement.innerText+=` Down (-)`;
-            setTimeout(()=>{
-                volumeChangeTextElement.innerText="Press Volume Up/Down Key";
-            },3000);
-        }else if(event.key==="AudioVolumeUp"){
-            volumeChangeTextElement.innerText+=` Up (+)`;
-            setTimeout(()=>{
-                volumeChangeTextElement.innerText="Press Volume Up/Down Key";
-            },3000);
-        }else{
-            volumeChangeTextElement.innerText="Press Volume Up/Down Key";
+        volumeChangeTextElement.innerText = `Key pressed: Volume`;
+        if (event.key === "AudioVolumeDown") {
+            volumeChangeTextElement.innerText += ` Down (-)`;
+            setTimeout(() => {
+                volumeChangeTextElement.innerText = "Press Volume Up/Down Key";
+            }, 3000);
+        } else if (event.key === "AudioVolumeUp") {
+            volumeChangeTextElement.innerText += ` Up (+)`;
+            setTimeout(() => {
+                volumeChangeTextElement.innerText = "Press Volume Up/Down Key";
+            }, 3000);
+        } else {
+            volumeChangeTextElement.innerText = "Press Volume Up/Down Key";
         }
     });
 }
 
-function countDifference(input){
+function countDifference(input) {
     const countDifferenceTextEle = document.getElementById('countDifferenceText');
     const refDate = Date.parse(input);
-    let displayCount=5;
-    setInterval(()=>{
-        if(displayCount>0){
-            const diff=Date.now()-refDate;
-            const days=Math.floor(diff/(1000*24*60*60));
-            const hr=Math.floor((diff%(1000*24*60*60))/(1000*60*60));
-            const min=Math.floor((diff%(1000*60*60))/(1000*60));
-            const sec=Math.floor((diff%(1000*60))/(1000));
-            if(diff<0){
-                countDifferenceTextEle.innerHTML=`Time Remaining<span> : ${Math.abs(days)} d, ${Math.abs(hr)} h, ${Math.abs(min)} m,  ${Math.abs(sec)} s</span>`;
-            }else{
-                countDifferenceTextEle.innerHTML=`Time Elapsed<span> : ${days} d, ${hr} h, ${min} m, ${sec} s</span>`;   
+    let displayCount = 5;
+    setInterval(() => {
+        if (displayCount > 0) {
+            const diff = Date.now() - refDate;
+            const days = Math.floor(diff / (1000 * 24 * 60 * 60));
+            const hr = Math.floor((diff % (1000 * 24 * 60 * 60)) / (1000 * 60 * 60));
+            const min = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const sec = Math.floor((diff % (1000 * 60)) / (1000));
+            if (diff < 0) {
+                countDifferenceTextEle.innerHTML = `Time Remaining<span> : ${Math.abs(days)} d, ${Math.abs(hr)} h, ${Math.abs(min)} m,  ${Math.abs(sec)} s</span>`;
+            } else {
+                countDifferenceTextEle.innerHTML = `Time Elapsed<span> : ${days} d, ${hr} h, ${min} m, ${sec} s</span>`;
             }
-        }else{
-            countDifferenceTextEle.innerHTML=``;
-            document.getElementById('countDifferenceInput').value=0;
+        } else {
+            countDifferenceTextEle.innerHTML = ``;
+            document.getElementById('countDifferenceInput').value = 0;
         }
         displayCount--;
-    },1000);
+    }, 1000);
 }
 
-function scrollToTop(){
-    window.scroll(0,0);
+function scrollToTop() {
+    window.scroll(0, 0);
 }
 
-function capsLockDisplay(){
-    window.addEventListener('keyup',(event)=>{
-        if(event.key=="CapsLock" && event.getModifierState("CapsLock")){
-            document.getElementById('capsLockText').innerHTML=`CAPSLOCK is ON`;
-            setTimeout(()=>{
-                document.getElementById('capsLockText').innerHTML=`Press CapsLock Key`;
-            },3000);
+function capsLockDisplay() {
+    window.addEventListener('keyup', (event) => {
+        if (event.key == "CapsLock" && event.getModifierState("CapsLock")) {
+            document.getElementById('capsLockText').innerHTML = `CAPSLOCK is ON`;
+            setTimeout(() => {
+                document.getElementById('capsLockText').innerHTML = `Press CapsLock Key`;
+            }, 3000);
 
-        }else if(event.key=="CapsLock" && !event.getModifierState("CapsLock")){
-            document.getElementById('capsLockText').innerHTML=`Capslock is off`;
-            setTimeout(()=>{
-                document.getElementById('capsLockText').innerHTML=`Press CapsLock Key`;
-            },3000);
+        } else if (event.key == "CapsLock" && !event.getModifierState("CapsLock")) {
+            document.getElementById('capsLockText').innerHTML = `Capslock is off`;
+            setTimeout(() => {
+                document.getElementById('capsLockText').innerHTML = `Press CapsLock Key`;
+            }, 3000);
         }
     })
 }
 
-function beforeunload(){
+function beforeunload() {
     window.addEventListener('beforeunload', function (e) {
         e.preventDefault();
         e.returnValue = '';
@@ -443,61 +443,61 @@ function beforeunload(){
     });
 }
 
-function openCustomWindow(){
+function openCustomWindow() {
     let href = window.location.href;
-    newWindow= window.open(href.substring(0,href.indexOf(':')+1),'popup',`scrollbars=yes,resizable=yes,top=${pageY},left=${pageX},width=${document.getElementById('newWindowWidth').value} , height=${document.getElementById('newWindowHeight').value}`
+    newWindow = window.open(href.substring(0, href.indexOf(':') + 1), 'popup', `scrollbars=yes,resizable=yes,top=${pageY},left=${pageX},width=${document.getElementById('newWindowWidth').value} , height=${document.getElementById('newWindowHeight').value}`
     );
 }
 
-function printPage(){
+function printPage() {
     window.print();
 }
 
-function toggleAccordionInfo(id){
-    let accordionTextElement = document.getElementById(id.replace('Title','Text'));
-    let accordionStatusElement = document.getElementById(id.replace('Title','Status'));
-    if(accordionTextElement.style.display==='none'){
-        accordionTextElement.style.display='block';
-        accordionStatusElement.innerHTML='-';
-    }else{
-        accordionTextElement.style.display='none';
-        accordionStatusElement.innerHTML='+';
+function toggleAccordionInfo(id) {
+    let accordionTextElement = document.getElementById(id.replace('Title', 'Text'));
+    let accordionStatusElement = document.getElementById(id.replace('Title', 'Status'));
+    if (accordionTextElement.style.display === 'none') {
+        accordionTextElement.style.display = 'block';
+        accordionStatusElement.innerHTML = '-';
+    } else {
+        accordionTextElement.style.display = 'none';
+        accordionStatusElement.innerHTML = '+';
     }
 }
 
-function tabClicked(id){
+function tabClicked(id) {
     let tabClickedEle = document.getElementById(id);
-    allTabsArray=[{'id':'tab1','background':'bg-primary'},{'id':'tab2','background':'bg-success'},{'id':'tab3','background':'bg-info'}];
-    let tabInfoEle=document.getElementById('tabInfo');
-    allTabsArray.forEach((currentLoopTab)=>{
-        let currentLoopTabElement=document.getElementById(currentLoopTab.id);
-        if(currentLoopTabElement.id===tabClickedEle.id && !(currentLoopTabElement.classList.contains('text-light'))){
+    allTabsArray = [{ 'id': 'tab1', 'background': 'bg-primary' }, { 'id': 'tab2', 'background': 'bg-success' }, { 'id': 'tab3', 'background': 'bg-info' }];
+    let tabInfoEle = document.getElementById('tabInfo');
+    allTabsArray.forEach((currentLoopTab) => {
+        let currentLoopTabElement = document.getElementById(currentLoopTab.id);
+        if (currentLoopTabElement.id === tabClickedEle.id && !(currentLoopTabElement.classList.contains('text-light'))) {
             currentLoopTabElement.classList.add('text-light');
-            tabInfoEle.innerHTML=`<div class="${currentLoopTab.background} p-3 col-12"></div>`;
-            tabInfoEle.style.display='block';
-        }else if(currentLoopTabElement.id!==tabClickedEle.id && (currentLoopTabElement.classList.contains('text-light'))){
+            tabInfoEle.innerHTML = `<div class="${currentLoopTab.background} p-3 col-12"></div>`;
+            tabInfoEle.style.display = 'block';
+        } else if (currentLoopTabElement.id !== tabClickedEle.id && (currentLoopTabElement.classList.contains('text-light'))) {
             currentLoopTabElement.classList.remove('text-light');
         }
     });
 }
 
-function slideDisplay(input){
+function slideDisplay(input) {
     let slides = document.getElementById('slides').children;
-    currentSlide+=input;
+    currentSlide += input;
 
-    if(currentSlide > slides.length){
-        currentSlide=1;
-    }else if(currentSlide<=0){
-        currentSlide=slides.length;
+    if (currentSlide > slides.length) {
+        currentSlide = 1;
+    } else if (currentSlide <= 0) {
+        currentSlide = slides.length;
     }
 
-    for(let i=1;i<=slides.length;i++){        
-        if(i!==currentSlide){
-            slides[i-1].style.display='none';
-            document.getElementById('currentSlideIndicator').children[i-1].classList.remove('bg-secondary');
-        }else{
-            slides[i-1].style.display='block';
-            document.getElementById('currentSlideIndicator').children[i-1].classList.add('bg-secondary');
+    for (let i = 1; i <= slides.length; i++) {
+        if (i !== currentSlide) {
+            slides[i - 1].style.display = 'none';
+            document.getElementById('currentSlideIndicator').children[i - 1].classList.remove('bg-secondary');
+        } else {
+            slides[i - 1].style.display = 'block';
+            document.getElementById('currentSlideIndicator').children[i - 1].classList.add('bg-secondary');
         }
     }
 }
