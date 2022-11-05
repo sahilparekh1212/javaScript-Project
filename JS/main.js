@@ -1,5 +1,6 @@
 let pageX, pageY, newWindow;
 let currentSlide = 1;
+let pointerDisplayToggleClicks = 0;
 
 window.onload = function () {
     updateBody();
@@ -111,7 +112,8 @@ function updateMain() {
                 <div class="card col-md-2 m-2 bg-light text-dark" id="mousePointerPositionTracker">
                     <div class="card-body">
                         <h5 class="card-title">Pointer Display</h5>
-                        <div id="mousePointerPositionTrackerText"></div>
+                        <div id="mousePointerPositionTrackerText">--</div>
+                        <button id="pointerDisplayToggle" class="mt-2 btn text-success border border-dark rounded">Start Tracking</button>
                     </div>
                 </div>
 
@@ -258,23 +260,7 @@ function addDOMEvents() {
 
     beforeunload();
 
-    const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
-    window.addEventListener('mousemove', (event) => {
-        pageX = event.pageX;
-        pageY = event.pageY;
-        mousePointerPositionTrackerTextElement.innerHTML = `
-            <span class="p-2">pageX= ${pageX}</span>
-            <span class="p-2">pageY= ${pageY}</span>
-        `;
-    });
-    window.addEventListener('touchmove', (event) => {
-        pageX = event.touches[0].pageX;
-        pageY = event.touches[0].pageY;
-        mousePointerPositionTrackerTextElement.innerHTML = ` 
-            <span class="p-2">pageX= ${pageX.toFixed(2)}</span>
-            <span class="p-2">pageY= ${pageY.toFixed(2)}</span>
-        `;
-    });
+    pointerDisplayToggleHandler();
 
     const hoverToggle = document.getElementById('hoverToggle');
     hoverToggle.addEventListener('mouseenter', () => {
@@ -500,4 +486,50 @@ function slideDisplay(input) {
             document.getElementById('currentSlideIndicator').children[i - 1].classList.add('bg-secondary');
         }
     }
+}
+
+function pointerDisplayToggleHandler(){
+    const pointerDisplayToggleEle = document.getElementById('pointerDisplayToggle');
+    pointerDisplayToggleEle.addEventListener('click',()=>{
+        pointerDisplayToggleClicks++;
+        if(pointerDisplayToggleClicks%2 !== 0){
+            addPointerDisplay();
+            pointerDisplayToggleEle.innerHTML = 'Stop Tracking';
+        }else{
+            pausePointerDisplay();
+            pointerDisplayToggleEle.innerHTML = 'Start Tracking';
+        }
+        pointerDisplayToggleEle.classList.toggle('text-danger');
+        pointerDisplayToggleEle.classList.toggle('text-success');
+    });
+}
+
+function addPointerDisplay(){
+    window.addEventListener('mousemove', mouseMoveHandler);
+    window.addEventListener('touchmove', touchMoveHandler);
+}
+
+function pausePointerDisplay(){
+    window.removeEventListener('touchmove',touchMoveHandler);
+    window.removeEventListener('mousemove',mouseMoveHandler);
+}
+
+function mouseMoveHandler(event){
+    const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
+    pageX = event.pageX;
+    pageY = event.pageY;
+    mousePointerPositionTrackerTextElement.innerHTML = `
+        <span class="p-2">pageX= ${pageX}</span>
+        <span class="p-2">pageY= ${pageY}</span>
+    `;
+}
+
+function touchMoveHandler(event){
+    const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
+    pageX = event.touches[0].pageX;
+    pageY = event.touches[0].pageY;
+    mousePointerPositionTrackerTextElement.innerHTML = ` 
+        <span class="p-2">pageX= ${pageX.toFixed(2)}</span>
+        <span class="p-2">pageY= ${pageY.toFixed(2)}</span>
+    `;
 }
