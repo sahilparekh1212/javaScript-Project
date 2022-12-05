@@ -151,7 +151,7 @@ function updateMain() {
 
                 <div class="card col-md-3 m-2 bg-light text-dark">
                     <div class="card-body">
-                        <h5 class="card-title">Get Time Difference</h5>
+                        <h5 class="card-title">Get Time Elapsed/Remaining</h5>
                         <div>
                             <span>Pick a Date:</span>
                             <input oninput="countDifference(this.value)" class="bg-light text-dark rounded p-1" id="countDifferenceInput" type="date">
@@ -377,27 +377,33 @@ function volumeChange() {
 }
 
 function countDifference(input) {
+    countDifferenceInput
+    const countDifferenceInputEle = document.getElementById('countDifferenceInput');
     const countDifferenceTextEle = document.getElementById('countDifferenceText');
     const refDate = Date.parse(input);
-    let displayCount = 5;
-    setInterval(() => {
-        if (displayCount > 0) {
-            const diff = Date.now() - refDate;
-            const days = Math.floor(diff / (1000 * 24 * 60 * 60));
-            const hr = Math.floor((diff % (1000 * 24 * 60 * 60)) / (1000 * 60 * 60));
-            const min = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const sec = Math.floor((diff % (1000 * 60)) / (1000));
-            if (diff < 0) {
-                countDifferenceTextEle.innerHTML = `Time Remaining<span> : ${Math.abs(days)} d, ${Math.abs(hr)} h, ${Math.abs(min)} m,  ${Math.abs(sec)} s</span>`;
-            } else {
-                countDifferenceTextEle.innerHTML = `Time Elapsed<span> : ${days} d, ${hr} h, ${min} m, ${sec} s</span>`;
-            }
-        } else {
-            countDifferenceTextEle.innerHTML = ``;
-            document.getElementById('countDifferenceInput').value = 0;
-        }
+    let displayCount = 4;
+    let timer = 0;
+    const setCount = () => {
+        const diff = Date.now() - refDate;
+        const days = Math.floor(diff / (1000 * 24 * 60 * 60));
+        const hr = Math.floor((diff % (1000 * 24 * 60 * 60)) / (1000 * 60 * 60));
+        const min = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const sec = Math.floor((diff % (1000 * 60)) / (1000));
+        countDifferenceInputEle.disabled = true;
         displayCount--;
-    }, 1000);
+        if (diff < 0) {
+            countDifferenceTextEle.innerHTML = `Time Remaining<span> : ${Math.abs(days)} d, ${Math.abs(hr)} h, ${Math.abs(min)} m,  ${Math.abs(sec)} s</span>`;
+        } else {
+            countDifferenceTextEle.innerHTML = `Time Elapsed<span> : ${days} d, ${hr} h, ${min} m, ${sec} s</span>`;
+        }
+        if (displayCount < 0) {
+            clearInterval(timer);
+            countDifferenceTextEle.innerHTML = '';
+            countDifferenceInputEle.disabled = false;
+            countDifferenceInputEle.value = null;
+        }
+    }
+    timer = setInterval(setCount, 1000);
 }
 
 function scrollToTop() {
@@ -488,14 +494,14 @@ function slideDisplay(input) {
     }
 }
 
-function pointerDisplayToggleHandler(){
+function pointerDisplayToggleHandler() {
     const pointerDisplayToggleEle = document.getElementById('pointerDisplayToggle');
-    pointerDisplayToggleEle.addEventListener('click',()=>{
+    pointerDisplayToggleEle.addEventListener('click', () => {
         pointerDisplayToggleClicks++;
-        if(pointerDisplayToggleClicks%2 !== 0){
+        if (pointerDisplayToggleClicks % 2 !== 0) {
             addPointerDisplay();
             pointerDisplayToggleEle.innerHTML = 'Stop Tracking';
-        }else{
+        } else {
             pausePointerDisplay();
             pointerDisplayToggleEle.innerHTML = 'Start Tracking';
         }
@@ -504,17 +510,17 @@ function pointerDisplayToggleHandler(){
     });
 }
 
-function addPointerDisplay(){
+function addPointerDisplay() {
     window.addEventListener('mousemove', mouseMoveHandler);
     window.addEventListener('touchmove', touchMoveHandler);
 }
 
-function pausePointerDisplay(){
-    window.removeEventListener('touchmove',touchMoveHandler);
-    window.removeEventListener('mousemove',mouseMoveHandler);
+function pausePointerDisplay() {
+    window.removeEventListener('touchmove', touchMoveHandler);
+    window.removeEventListener('mousemove', mouseMoveHandler);
 }
 
-function mouseMoveHandler(event){
+function mouseMoveHandler(event) {
     const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
     pageX = event.pageX;
     pageY = event.pageY;
@@ -524,7 +530,7 @@ function mouseMoveHandler(event){
     `;
 }
 
-function touchMoveHandler(event){
+function touchMoveHandler(event) {
     const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
     pageX = event.touches[0].pageX;
     pageY = event.touches[0].pageY;
