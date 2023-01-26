@@ -1,13 +1,14 @@
 let pageX, pageY, newWindow;
 let currentSlide = 1;
 let pointerDisplayToggleClicks = 0;
+const $ = document.querySelector.bind(document);
 
 window.onload = function () {
     updateBody();
 }
 
 function updateBody() {
-    const body = document.querySelector('body');
+    const body = $('body');
     body.classList.add('bg-dark', 'text-light');
     body.innerHTML = `
     <header></header>
@@ -21,7 +22,7 @@ function updateBody() {
 }
 
 function updateHeader() {
-    const header = document.querySelector('header');
+    const header = $('header');
     header.innerHTML = `
         <nav class="navbar navbar-expand-lg">
             <div class="container">
@@ -48,7 +49,7 @@ function updateHeader() {
 }
 
 function updateMain() {
-    const main = document.querySelector('main');
+    const main = $('main');
     main.classList.add('container', 'p-3');
     main.innerHTML = `
         <div class="container">
@@ -226,7 +227,7 @@ function updateMain() {
 }
 
 function updateFooter() {
-    const footer = document.querySelector('footer');
+    const footer = $('footer');
     footer.innerHTML = `
         <div class="container">
             <div class="row d-flex">
@@ -262,7 +263,7 @@ function addDOMEvents() {
 
     pointerDisplayToggleHandler();
 
-    const hoverToggle = document.getElementById('hoverToggle');
+    const hoverToggle = $('#hoverToggle');
     hoverToggle.addEventListener('mouseenter', () => {
         hoverToggle.classList.remove('bg-light', 'text-dark');
         hoverToggle.classList.add('bg-dark', 'text-light');
@@ -272,7 +273,7 @@ function addDOMEvents() {
         hoverToggle.classList.add('bg-light', 'text-dark');
     });
 
-    const windowClickCounterElement = document.getElementById('windowClickCounterText');
+    const windowClickCounterElement = $('#windowClickCounterText');
     let windowClickCount = 0;
     let windowDblClickCount = 0;
     window.addEventListener('click', () => {
@@ -280,7 +281,7 @@ function addDOMEvents() {
         windowClickCounterElement.innerText = `${windowClickCount}`;
     });
 
-    const windowDblClickCounterElement = document.getElementById('windowDblClickCounterText');
+    const windowDblClickCounterElement = $('#windowDblClickCounterText');
     window.addEventListener('dblclick', () => {
         windowDblClickCount++;
         windowDblClickCounterElement.innerText = `${windowDblClickCount}`;
@@ -296,7 +297,7 @@ function addDOMEvents() {
 }
 
 function copyToClipboard() {
-    const copyTextElement = document.getElementById("clipboardInput");
+    const copyTextElement = $('#clipboardInput');
     copyTextElement.select();
     copyTextElement.setSelectionRange(0, 20);
     navigator.clipboard.writeText(copyTextElement.value);
@@ -308,7 +309,7 @@ function copyToClipboard() {
 }
 
 function copyAndShareTextWithURL() {
-    const textToBeSharedElement = document.getElementById("textToBeShared");
+    const textToBeSharedElement = $('#textToBeShared');
     textToBeSharedElement.select();
     textToBeSharedElement.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(textToBeSharedElement.value);
@@ -326,7 +327,7 @@ function copyAndShareTextWithURL() {
 
 function getLocation() {
     navigator.geolocation.getCurrentPosition((position) => {
-        const locationTextElement = document.getElementById('locationText')
+        const locationTextElement = $('#locationText')
 
         locationTextElement.innerText = `
         latitude= ${position.coords.latitude} ,\n longitude= ${position.coords.longitude}
@@ -352,13 +353,13 @@ function getBattery(functionName) {
 }
 
 function showBatteryLevelAndCharging(level, charging) {
-    document.getElementById('batteryLevelText').innerText = `chargeLevel = ${level * 100}% ,`;
-    document.getElementById('batteryChargingText').innerText = `\nis charging ? = ${charging ? 'Yes' : 'No'}`;
+    $('#batteryLevelText').innerText = `chargeLevel = ${level * 100}% ,`;
+    $('#batteryChargingText').innerText = `\nis charging ? = ${charging ? 'Yes' : 'No'}`;
 }
 
 function volumeChange() {
     window.addEventListener('keydown', (event) => {
-        const volumeChangeTextElement = document.getElementById('volumeChangeText');
+        const volumeChangeTextElement = $('#volumeChangeText');
         volumeChangeTextElement.innerText = `Key pressed: Volume`;
         if (event.key === "AudioVolumeDown") {
             volumeChangeTextElement.innerText += ` Down (-)`;
@@ -378,8 +379,8 @@ function volumeChange() {
 
 function countDifference(input) {
     countDifferenceInput
-    const countDifferenceInputEle = document.getElementById('countDifferenceInput');
-    const countDifferenceTextEle = document.getElementById('countDifferenceText');
+    const countDifferenceInputEle = $('#countDifferenceInput');
+    const countDifferenceTextEle = $('#countDifferenceText');
     const refDate = Date.parse(input);
     let displayCount = 4;
     let timer = 0;
@@ -413,15 +414,15 @@ function scrollToTop() {
 function capsLockDisplay() {
     window.addEventListener('keyup', (event) => {
         if (event.key == "CapsLock" && event.getModifierState("CapsLock")) {
-            document.getElementById('capsLockText').innerHTML = `CAPSLOCK is ON`;
+            $('#capsLockText').innerHTML = `CAPSLOCK is ON`;
             setTimeout(() => {
-                document.getElementById('capsLockText').innerHTML = `Press CapsLock Key`;
+                $('#capsLockText').innerHTML = `Press CapsLock Key`;
             }, 3000);
 
         } else if (event.key == "CapsLock" && !event.getModifierState("CapsLock")) {
-            document.getElementById('capsLockText').innerHTML = `Capslock is off`;
+            $('#capsLockText').innerHTML = `Capslock is off`;
             setTimeout(() => {
-                document.getElementById('capsLockText').innerHTML = `Press CapsLock Key`;
+                $('#capsLockText').innerHTML = `Press CapsLock Key`;
             }, 3000);
         }
     })
@@ -437,7 +438,7 @@ function beforeunload() {
 
 function openCustomWindow() {
     let href = window.location.href;
-    newWindow = window.open(href.substring(0, href.indexOf(':') + 1), 'popup', `scrollbars=yes,resizable=yes,top=${pageY},left=${pageX},width=${document.getElementById('newWindowWidth').value} , height=${document.getElementById('newWindowHeight').value}`
+    newWindow = window.open(href.substring(0, href.indexOf(':') + 1), 'popup', `scrollbars=yes,resizable=yes,top=${pageY},left=${pageX},width=${$('#newWindowWidth').value} , height=${$('#newWindowHeight').value}`
     );
 }
 
@@ -446,8 +447,8 @@ function printPage() {
 }
 
 function toggleAccordionInfo(id) {
-    let accordionTextElement = document.getElementById(id.replace('Title', 'Text'));
-    let accordionStatusElement = document.getElementById(id.replace('Title', 'Status'));
+    let accordionTextElement = $('#' + id.replace('Title', 'Text'));
+    let accordionStatusElement = $('#' + id.replace('Title', 'Status'));
     if (accordionTextElement.style.display === 'none') {
         accordionTextElement.style.display = 'block';
         accordionStatusElement.innerHTML = '-';
@@ -458,11 +459,11 @@ function toggleAccordionInfo(id) {
 }
 
 function tabClicked(id) {
-    let tabClickedEle = document.getElementById(id);
+    let tabClickedEle = $('#' + id);
     allTabsArray = [{ 'id': 'tab1', 'background': 'bg-primary' }, { 'id': 'tab2', 'background': 'bg-success' }, { 'id': 'tab3', 'background': 'bg-info' }];
-    let tabInfoEle = document.getElementById('tabInfo');
+    let tabInfoEle = $('#tabInfo');
     allTabsArray.forEach((currentLoopTab) => {
-        let currentLoopTabElement = document.getElementById(currentLoopTab.id);
+        let currentLoopTabElement = $('#' + currentLoopTab.id);
         if (currentLoopTabElement.id === tabClickedEle.id && !(currentLoopTabElement.classList.contains('text-light'))) {
             currentLoopTabElement.classList.add('text-light');
             tabInfoEle.innerHTML = `<div class="${currentLoopTab.background} p-3 col-12"></div>`;
@@ -474,7 +475,7 @@ function tabClicked(id) {
 }
 
 function slideDisplay(input) {
-    let slides = document.getElementById('slides').children;
+    let slides = $('#slides').children;
     currentSlide += input;
 
     if (currentSlide > slides.length) {
@@ -486,16 +487,16 @@ function slideDisplay(input) {
     for (let i = 1; i <= slides.length; i++) {
         if (i !== currentSlide) {
             slides[i - 1].style.display = 'none';
-            document.getElementById('currentSlideIndicator').children[i - 1].classList.remove('bg-secondary');
+            $('#currentSlideIndicator').children[i - 1].classList.remove('bg-secondary');
         } else {
             slides[i - 1].style.display = 'block';
-            document.getElementById('currentSlideIndicator').children[i - 1].classList.add('bg-secondary');
+            $('#currentSlideIndicator').children[i - 1].classList.add('bg-secondary');
         }
     }
 }
 
 function pointerDisplayToggleHandler() {
-    const pointerDisplayToggleEle = document.getElementById('pointerDisplayToggle');
+    const pointerDisplayToggleEle = $('#pointerDisplayToggle');
     pointerDisplayToggleEle.addEventListener('click', () => {
         pointerDisplayToggleClicks++;
         if (pointerDisplayToggleClicks % 2 !== 0) {
@@ -521,7 +522,7 @@ function pausePointerDisplay() {
 }
 
 function mouseMoveHandler(event) {
-    const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
+    const mousePointerPositionTrackerTextElement = $('#mousePointerPositionTrackerText');
     pageX = event.pageX;
     pageY = event.pageY;
     mousePointerPositionTrackerTextElement.innerHTML = `
@@ -531,7 +532,7 @@ function mouseMoveHandler(event) {
 }
 
 function touchMoveHandler(event) {
-    const mousePointerPositionTrackerTextElement = document.getElementById('mousePointerPositionTrackerText');
+    const mousePointerPositionTrackerTextElement = $('#mousePointerPositionTrackerText');
     pageX = event.touches[0].pageX;
     pageY = event.touches[0].pageY;
     mousePointerPositionTrackerTextElement.innerHTML = ` 
