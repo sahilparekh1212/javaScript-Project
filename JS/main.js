@@ -53,14 +53,17 @@ function updateMain() {
     main.classList.add('container', 'p-3');
     main.innerHTML = `
         <div class="container">
-            
-            <div style="position:fixed; right:15px; bottom:65px; z-index:100;">
+            <div style="display:flex; flex-direction:column; flex-wrap:wrap;position:fixed; right:15px; bottom:15px; z-index:100;">
+                <button onclick="goFullScreen()" class="border-0 h2 bi bi-arrows-fullscreen bg-dark text-primary"></button>    
                 <button onclick="printPage()" class="border-0 h2 bi bi-printer bg-dark text-primary"></button>    
+                <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>
             </div>
 
+            <div style="position:fixed; right:15px; bottom:65px; z-index:100;">
+                </div>
+
             <div style="position:fixed; right:15px; bottom:15px; z-index:100;">
-                <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>    
-            </div>
+                 </div>
             
             <div class="row d-flex">
                 
@@ -539,4 +542,13 @@ function touchMoveHandler(event) {
         <span class="p-2">pageX= ${pageX.toFixed(2)}</span>
         <span class="p-2">pageY= ${pageY.toFixed(2)}</span>
     `;
+}
+
+function goFullScreen() {
+    const ele = document.querySelector('body');
+    if (ele.requestFullscreen) {
+        ele.requestFullscreen();
+    } else {
+        alert(' Oops..!The feature is not optimized for your browser');
+    }
 }
