@@ -233,29 +233,7 @@ function updateFooter() {
     const footer = $('footer');
     footer.innerHTML = `
         <div class="container">
-            <div class="row d-flex">
-                <div class="col-md-2 my-auto">
-                    <span class="my-auto p-3">Follow Us:</span>
-                </div>
-                <div class="col-md-3 p-2 my-auto justify-content-around">        
-                    <a href="https://www.youtube.com/" target="_blank"><i class="bi-youtube p-3 text-light" aria-hidden="true"></i></a>
-                    <a href="https://twitter.com/?lang=en" target="_blank"><i class="bi-twitter p-3 text-light" aria-hidden="true"></i></a>
-                    <a href="https://www.instagram.com/" target="_blank"><i class="bi-instagram p-3 text-light" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <div class="row d-flex">
-                <div class="col-md-2 my-auto">
-                    <span class="my-auto p-3">Logo</span>
-                </div>
-                <div class="col-md-5 p-2 my-auto justify-content-around">        
-                    <a href="#" target="_blank" class="text-decoration-none text-light"><span class="p-3">Privacy and Terms</span></a>
-                    <a href="#" target="_blank" class="text-decoration-none text-light"><span class="p-3">About Us</span></a>
-                    <a href="#" target="_blank" class="text-decoration-none text-light"><span class="p-3">Our Products</span></a>
-                </div>
-                <div class="col-md-5 p-2">        
-                    <a href="#" target="_blank" class="text-decoration-none text-light"><i class="bi bi-question p-2" aria-hidden="true"></i><span>Help</span></a>
-                </div>
-            </div>
+            <p class="dateModified text-info" style="padding-left:1rem"></p>
         </div>
     `;
 }
@@ -297,6 +275,8 @@ function addDOMEvents() {
     tabClicked('tab1');
 
     slideDisplay(0);
+
+    addDateModified();
 }
 
 function copyToClipboard() {
@@ -551,4 +531,10 @@ function goFullScreen() {
     } else {
         alert(' Oops..!The feature is not optimized for your browser');
     }
+}
+
+function addDateModified() {
+    let ele = $('.dateModified');
+    ele.innerHTML += "Date Modified: " + new Date(document.lastModified).toLocaleString(['en-CA', 'en-US']);
+    ele.style.paddingLeft = "1rem";
 }
