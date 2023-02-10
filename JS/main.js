@@ -19,6 +19,7 @@ function updateBody() {
     updateMain();
     updateFooter();
     addDOMEvents();
+    // TBD scrollSpy();
 }
 
 function updateHeader() {
@@ -52,29 +53,24 @@ function updateMain() {
     const main = $('main');
     main.classList.add('container', 'p-3');
     main.innerHTML = `
+        <div id="scrollSpy" class="bg-info" style="display:flex; flex-direction:row; flex-wrap:wrap; position:fixed; left:0; top:0; z-index:100; align-items:center; justify-content:center;">
+        </div>
         <div class="container">
             <div style="display:flex; flex-direction:column; flex-wrap:wrap;position:fixed; right:15px; bottom:15px; z-index:100;">
                 <button onclick="goFullScreen()" class="border-0 h2 bi bi-arrows-fullscreen bg-dark text-primary"></button>    
                 <button onclick="printPage()" class="border-0 h2 bi bi-printer bg-dark text-primary"></button>    
                 <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>
             </div>
-
-            <div style="position:fixed; right:15px; bottom:65px; z-index:100;">
-                </div>
-
-            <div style="position:fixed; right:15px; bottom:15px; z-index:100;">
-                 </div>
-            
             <div class="row d-flex">
                 
-                <div class="card col-md-2 m-2 bg-light text-dark" id="hoverToggle">
+                <div class="card col-md-2 m-2 bg-light text-dark" id="hoverToggleCard">
                     <div class="card-body">
                         <h5 class="card-title">Hover Toggle</h5>
                         <p>Lorem cingnihil?</p>
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="capsLockCard">
                     <div class="card-body">
                         <h5 class="card-title bi bi-keyboard"> View CapsLock State</h5>
                         <div>
@@ -83,7 +79,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="volumeCard">
                     <div class="card-body">
                         <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
                         <div>
@@ -102,7 +98,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="shareText">
                     <div class="card-body">
                         <h5 class="card-title">Share Text</h5>
                         <div>
@@ -131,7 +127,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="locationCard">
                     <div class="card-body">
                         <h5 class="card-title">Get Location</h5>
                         <div>
@@ -141,7 +137,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-2 m-2 bg-light text-dark">
+                <div class="card col-md-2 m-2 bg-light text-dark" id="batteryCard">
                     <div class="card-body">
                         <h5 class="card-title">Live Battery Info</h5>
                         <div>
@@ -153,7 +149,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="countDifferenceCard">
                     <div class="card-body">
                         <h5 class="card-title">Get Time Elapsed/Remaining</h5>
                         <div>
@@ -164,7 +160,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="openNewWindowCard">
                     <div class="card-body">
                         <h5 class="card-title"> Open New Window</h5>
                         <div class="d-flex">                        
@@ -175,7 +171,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="accordionCard">
                     <div class="card-body">
                         <button id="accordionTitle" onclick="toggleAccordionInfo(this.id)" class="card-title d-flex justify-content-between h5 border-0" style="width:100%">
                             <div>Accordion</div>
@@ -185,7 +181,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="navCard">
                     <div class="card-body">
                         <h5>Navigation Display</h5>
                         <div class="card-title">
@@ -201,7 +197,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="slideCard">
                     <div class="card-body" style="position:relative;">
                         <div class="card-title h5";>
                             Slide Display
@@ -244,14 +240,14 @@ function addDOMEvents() {
 
     pointerDisplayToggleHandler();
 
-    const hoverToggle = $('#hoverToggle');
-    hoverToggle.addEventListener('mouseenter', () => {
-        hoverToggle.classList.remove('bg-light', 'text-dark');
-        hoverToggle.classList.add('bg-dark', 'text-light');
+    const hoverToggleCard = $('#hoverToggleCard');
+    hoverToggleCard.addEventListener('mouseenter', () => {
+        hoverToggleCard.classList.remove('bg-light', 'text-dark');
+        hoverToggleCard.classList.add('bg-dark', 'text-light');
     });
-    hoverToggle.addEventListener('mouseleave', () => {
-        hoverToggle.classList.remove('bg-dark', 'text-light');
-        hoverToggle.classList.add('bg-light', 'text-dark');
+    hoverToggleCard.addEventListener('mouseleave', () => {
+        hoverToggleCard.classList.remove('bg-dark', 'text-light');
+        hoverToggleCard.classList.add('bg-light', 'text-dark');
     });
 
     const windowClickCounterElement = $('#windowClickCounterText');
@@ -336,7 +332,7 @@ function getBattery(functionName) {
 }
 
 function showBatteryLevelAndCharging(level, charging) {
-    $('#batteryLevelText').innerText = `chargeLevel = ${level * 100}% ,`;
+    $('#batteryLevelText').innerText = `chargeLevel = ${(level * 100).toFixed(0)}% ,`;
     $('#batteryChargingText').innerText = `\nis charging ? = ${charging ? 'Yes' : 'No'}`;
 }
 
@@ -535,6 +531,57 @@ function goFullScreen() {
 
 function addDateModified() {
     let ele = $('.dateModified');
-    ele.innerHTML += "Date Modified: " + new Date(document.lastModified).toLocaleString(['en-CA', 'en-US']);
+    ele.innerHTML += "Date Modified: " + new Date(document.lastModified).toLocaleString(['en-CA', 'en-US'], { year: "numeric", month: "long", day: "numeric" });
     ele.style.paddingLeft = "1rem";
+}
+
+function scrollSpy() {
+    let eleList = document.querySelectorAll(".card");
+    let found = null;
+    let objList = [];
+    for (let ele of eleList) {
+        let obj = {
+            ele: ele,
+            offsetTop: ele.offsetTop
+        }
+        objList.push(ele);
+        console.log("obj=", obj);
+    }
+    document.addEventListener("scroll", (e) => {
+        console.log("window.scrollY=", window.scrollY);
+        found = objList.find((item) => item.offsetTop > window.scrollY);
+        console.log('found=', found);
+        if (!found) {
+            found = objList[objList.length - 1];
+        }
+        let activeEle = $(".active");
+        if (activeEle) {
+            console.log("activeEle.id=", activeEle.id);
+            activeEle.classList.remove("active");
+        }
+
+        console.log("found.id=", found.id);
+        let applyActiveId = "#" + found.id + "ScrollSpy";
+        $(applyActiveId).classList.add("active");
+    })
+    let scrollSpyEle = $("#scrollSpy");
+    objList.forEach((item, index) => {
+        if (index = 0) {
+            scrollSpyEle.innerHTML = ``;
+        }
+        scrollSpyEle.innerHTML += `<div id="${item.id}ScrollSpy" style="padding:5px">${item.id}</div>`;
+    })
+}
+
+function highlight(id) {
+    $('#' + id).style.border = "3px solid yellow";
+    setTimeout(() => {
+        $('#' + id).style.color = "red";
+    }, 1000);
+    setTimeout(() => {
+        $('#' + id).style.color = "green";
+    }, 1000);
+    setTimeout(() => {
+        $('#' + id).style.color = "blue";
+    }, 1000);
 }
