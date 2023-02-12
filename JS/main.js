@@ -572,16 +572,3 @@ function scrollSpy() {
         scrollSpyEle.innerHTML += `<div id="${item.id}ScrollSpy" style="padding:5px">${item.id}</div>`;
     })
 }
-
-function highlight(id) {
-    $('#' + id).style.border = "3px solid yellow";
-    setTimeout(() => {
-        $('#' + id).style.color = "red";
-    }, 1000);
-    setTimeout(() => {
-        $('#' + id).style.color = "green";
-    }, 1000);
-    setTimeout(() => {
-        $('#' + id).style.color = "blue";
-    }, 1000);
-}
