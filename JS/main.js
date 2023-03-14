@@ -1,3 +1,5 @@
+"use strict";
+
 let pageX, pageY, newWindow;
 let currentSlide = 1;
 let pointerDisplayToggleClicks = 0;
@@ -439,7 +441,7 @@ function toggleAccordionInfo(id) {
 
 function tabClicked(id) {
     let tabClickedEle = $('#' + id);
-    allTabsArray = [{ 'id': 'tab1', 'background': 'bg-primary' }, { 'id': 'tab2', 'background': 'bg-success' }, { 'id': 'tab3', 'background': 'bg-info' }];
+    let allTabsArray = [{ 'id': 'tab1', 'background': 'bg-primary' }, { 'id': 'tab2', 'background': 'bg-success' }, { 'id': 'tab3', 'background': 'bg-info' }];
     let tabInfoEle = $('#tabInfo');
     allTabsArray.forEach((currentLoopTab) => {
         let currentLoopTabElement = $('#' + currentLoopTab.id);
