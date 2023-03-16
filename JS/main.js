@@ -33,19 +33,6 @@ function updateHeader() {
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuItems">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="menuItems">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-light">A</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-light">B</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-light">C</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
     `;
@@ -59,7 +46,7 @@ function updateMain() {
         </div>
         <div class="container">
             <div style="display:flex; flex-direction:column; flex-wrap:wrap;position:fixed; right:15px; bottom:15px; z-index:100;">
-                <button onclick="goFullScreen()" class="border-0 h2 bi bi-arrows-fullscreen bg-dark text-primary"></button>    
+                <button id="toggleFullScreenButton" onclick="toggleFullScreen(this.id)" class="border-0 h2 bi bi-arrows-fullscreen bg-dark text-primary"></button>    
                 <button onclick="printPage()" class="border-0 h2 bi bi-printer bg-dark text-primary"></button>    
                 <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>
             </div>
@@ -218,6 +205,17 @@ function updateMain() {
                             <span class="p-1 m-2" style="border-radius:50%; border:1px solid black;"></span>
                             <span class="p-1 m-2" style="border-radius:50%; border:1px solid black;"></span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="card col-md-3 m-2 bg-light text-dark" id="factorialDiv">
+                    <div class="card-body" id="factorialDivBody">
+                        <h5 class="card-title"> Factorial Using Recursion</h5>
+                        <div class="d-flex">                        
+                            <div>Number: <input class="bg-light text-dark rounded p-1 m-1" type="number" value="5" style="max-width:70px" id="factorialInput" ></div>
+                            <button onclick="findFactorial()" class="bi bi-search rounded p-1 m-1"> Answer</button>
+                        </div>
+                        <div id="factorialAnswer"></div>
                     </div>
                 </div>
 
@@ -413,7 +411,9 @@ function beforeunload() {
     window.addEventListener('beforeunload', function (e) {
         e.preventDefault();
         e.returnValue = '';
-        newWindow.close();
+        if (newWindow) {
+            newWindow.close();
+        }
     });
 }
 
@@ -522,10 +522,17 @@ function touchMoveHandler(event) {
     `;
 }
 
-function goFullScreen() {
+function toggleFullScreen(buttonId) {
     const ele = document.querySelector('body');
+    const buttonEle = document.querySelector(`#${buttonId}`);
     if (ele.requestFullscreen) {
-        ele.requestFullscreen();
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else {
+            ele.requestFullscreen();
+        }
+        buttonEle.classList.toggle("bi-arrows-collapse");
+        buttonEle.classList.toggle("bi-arrows-fullscreen");
     } else {
         alert(' Oops..!The feature is not optimized for your browser');
     }
@@ -573,4 +580,20 @@ function scrollSpy() {
         }
         scrollSpyEle.innerHTML += `<div id="${item.id}ScrollSpy" style="padding:5px">${item.id}</div>`;
     })
+}
+
+function findFactorial() {
+    let input = document.getElementById("factorialInput").value;
+    function findFactorialHelper(input) {
+        if (input < 0) {
+            return -1;
+        }
+        else if (input == 0 || input == 1) {
+            return 1;
+        }
+        else {
+            return (input * findFactorialHelper(input - 1));
+        }
+    }
+    document.querySelector('#factorialAnswer').innerHTML = `Answer: ${findFactorialHelper(input)}`;
 }
