@@ -523,8 +523,8 @@ function touchMoveHandler(event) {
 }
 
 function toggleFullScreen(buttonId) {
-    const ele = document.querySelector('body');
-    const buttonEle = document.querySelector(`#${buttonId}`);
+    const ele = $('body');
+    const buttonEle = $(`#${buttonId}`);
     if (ele.requestFullscreen) {
         if (document.fullscreenElement) {
             document.exitFullscreen();
@@ -595,5 +595,5 @@ function findFactorial() {
             return (input * findFactorialHelper(input - 1));
         }
     }
-    document.querySelector('#factorialAnswer').innerHTML = `Answer: ${findFactorialHelper(input)}`;
+    $('#factorialAnswer').innerHTML = `Answer: ${findFactorialHelper(input)}`;
 }
