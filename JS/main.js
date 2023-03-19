@@ -21,7 +21,6 @@ function updateBody() {
     updateMain();
     updateFooter();
     addDOMEvents();
-    // TBD scrollSpy();
 }
 
 function updateHeader() {
@@ -42,14 +41,13 @@ function updateMain() {
     const main = $('main');
     main.classList.add('container', 'p-3');
     main.innerHTML = `
-        <div id="scrollSpy" class="bg-info" style="display:flex; flex-direction:row; flex-wrap:wrap; position:fixed; left:0; top:0; z-index:100; align-items:center; justify-content:center;">
-        </div>
         <div class="container">
-            <div style="display:flex; flex-direction:column; flex-wrap:wrap;position:fixed; right:15px; bottom:15px; z-index:100;">
+            <div style="display:flex; flex-direction:column; flex-wrap:wrap;position:fixed; right:15px; bottom:45px; z-index:100;">
                 <button id="toggleFullScreenButton" onclick="toggleFullScreen(this.id)" class="border-0 h2 bi bi-arrows-fullscreen bg-dark text-primary"></button>    
                 <button onclick="printPage()" class="border-0 h2 bi bi-printer bg-dark text-primary"></button>    
                 <button onclick="scrollToTop()" class="border-0 h2 bi bi-arrow-up-circle bg-dark text-primary"></button>
             </div>
+            <button id="scrollSpy" class="bg-info" style="position:fixed; right:15px; bottom:10px; z-index:100; overflow-wrap:break-word;"></button>
             <div class="row d-flex">
                 
                 <div class="card col-md-2 m-2 bg-light text-dark" id="hoverToggleCard">
@@ -59,7 +57,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="capsLockCard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="viewCapsLockStateCard">
                     <div class="card-body">
                         <h5 class="card-title bi bi-keyboard"> View CapsLock State</h5>
                         <div>
@@ -68,7 +66,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="volumeCard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="viewVolumeCard">
                     <div class="card-body">
                         <h5 class="card-title bi bi-speaker"> View Volume + -</h5>
                         <div>
@@ -77,7 +75,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="clipboard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="copyToClipboardCard">
                     <div class="card-body">
                         <h5 class="card-title">Copy To Clipboard</h5>
                         <input id="clipboardInput" type="text" value="Sample Text" maxlength="20" style="max-width:70%"
@@ -98,17 +96,17 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-2 m-2 bg-light text-dark" id="mousePointerPositionTracker">
+                <div class="card col-md-2 m-2 bg-light text-dark" id="mouseOrTouchPointerPositionTracker">
                     <div class="card-body">
                         <h5 class="card-title">Pointer Display</h5>
-                        <div id="mousePointerPositionTrackerText">--</div>
+                        <div id="mouseOrTouchPointerPositionTrackerText">--</div>
                         <button id="pointerDisplayToggle" class="mt-2 btn text-success border border-dark rounded">Start Tracking</button>
                     </div>
                 </div>
 
                 <div class="card col-md-2 m-2 bg-light text-dark" id="clickCounter">
                     <div class="card-body">
-                        <h5 class="card-title">Clicks Logger</h5>
+                        <h5 class="card-title">Click Counter</h5>
                         <div>
                             <div>click= <span id="windowClickCounterText" class="p-2">0</span></div>
                             <div>dblClick= <span id="windowDblClickCounterText" class="p-2">0</span></div>
@@ -116,7 +114,7 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="locationCard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="getLocationCard">
                     <div class="card-body">
                         <h5 class="card-title">Get Location</h5>
                         <div>
@@ -126,19 +124,19 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-2 m-2 bg-light text-dark" id="batteryCard">
+                <div class="card col-md-2 m-2 bg-light text-dark" id="liveBatteryCard">
                     <div class="card-body">
                         <h5 class="card-title">Live Battery Info</h5>
                         <div>
                             <button onclick="getBattery(showBatteryLevelAndCharging)" class="bi bi-battery rounded p-1">
-                                Battery</button>
+                                Show Battery</button><br>
                             <span id="batteryLevelText"></span>
                             <span id="batteryChargingText"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="countDifferenceCard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="getTimeDiffCard">
                     <div class="card-body">
                         <h5 class="card-title">Get Time Elapsed/Remaining</h5>
                         <div>
@@ -186,10 +184,10 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="slideCard">
+                <div class="card col-md-3 m-2 bg-light text-dark" id="slidesDisplayCard">
                     <div class="card-body" style="position:relative;">
                         <div class="card-title h5";>
-                            Slide Display
+                            Slides Display
                         </div>
                         <div class="d-flex justify-content-around">
                             <button onclick="slideDisplay(-1)" class="slideControl p-2 bg-secondary text-light border-0">&lt;</button>
@@ -212,7 +210,7 @@ function updateMain() {
                     <div class="card-body" id="factorialDivBody">
                         <h5 class="card-title"> Factorial Using Recursion</h5>
                         <div class="d-flex">                        
-                            <div>Number: <input class="bg-light text-dark rounded p-1 m-1" type="number" value="5" style="max-width:70px" id="factorialInput" ></div>
+                            <div>Factorial of : <input class="bg-light text-dark rounded p-1 m-1" type="number" value="5" style="max-width:70px" id="factorialInput" ></div>
                             <button onclick="findFactorial()" class="bi bi-search rounded p-1 m-1"> Answer</button>
                         </div>
                         <div id="factorialAnswer"></div>
@@ -273,6 +271,8 @@ function addDOMEvents() {
     slideDisplay(0);
 
     addDateModified();
+
+    scrollSpy();
 }
 
 function copyToClipboard() {
@@ -357,7 +357,6 @@ function volumeChange() {
 }
 
 function countDifference(input) {
-    countDifferenceInput
     const countDifferenceInputEle = $('#countDifferenceInput');
     const countDifferenceTextEle = $('#countDifferenceText');
     const refDate = Date.parse(input);
@@ -503,20 +502,20 @@ function pausePointerDisplay() {
 }
 
 function mouseMoveHandler(event) {
-    const mousePointerPositionTrackerTextElement = $('#mousePointerPositionTrackerText');
+    const mouseOrTouchPointerPositionTrackerTextElement = $('#mouseOrTouchPointerPositionTrackerText');
     pageX = event.pageX;
     pageY = event.pageY;
-    mousePointerPositionTrackerTextElement.innerHTML = `
+    mouseOrTouchPointerPositionTrackerTextElement.innerHTML = `
         <span class="p-2">pageX= ${pageX}</span>
         <span class="p-2">pageY= ${pageY}</span>
     `;
 }
 
 function touchMoveHandler(event) {
-    const mousePointerPositionTrackerTextElement = $('#mousePointerPositionTrackerText');
+    const mouseOrTouchPointerPositionTrackerTextElement = $('#mouseOrTouchPointerPositionTrackerText');
     pageX = event.touches[0].pageX;
     pageY = event.touches[0].pageY;
-    mousePointerPositionTrackerTextElement.innerHTML = ` 
+    mouseOrTouchPointerPositionTrackerTextElement.innerHTML = ` 
         <span class="p-2">pageX= ${pageX.toFixed(2)}</span>
         <span class="p-2">pageY= ${pageY.toFixed(2)}</span>
     `;
@@ -548,6 +547,8 @@ function scrollSpy() {
     let eleList = document.querySelectorAll(".card");
     let found = null;
     let objList = [];
+    let scrollSpyEle = $("#scrollSpy");
+
     for (let ele of eleList) {
         let obj = {
             ele: ele,
@@ -570,15 +571,7 @@ function scrollSpy() {
         }
 
         console.log("found.id=", found.id);
-        let applyActiveId = "#" + found.id + "ScrollSpy";
-        $(applyActiveId).classList.add("active");
-    })
-    let scrollSpyEle = $("#scrollSpy");
-    objList.forEach((item, index) => {
-        if (index = 0) {
-            scrollSpyEle.innerHTML = ``;
-        }
-        scrollSpyEle.innerHTML += `<div id="${item.id}ScrollSpy" style="padding:5px">${item.id}</div>`;
+        scrollSpyEle.innerHTML = `<div id="${found.id}ScrollSpy" style="padding:5px">At: #${found.id}</div>`;
     })
 }
 
