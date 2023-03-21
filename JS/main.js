@@ -545,33 +545,19 @@ function addDateModified() {
 
 function scrollSpy() {
     let eleList = document.querySelectorAll(".card");
-    let found = null;
+    let currentElement = null;
     let objList = [];
     let scrollSpyEle = $("#scrollSpy");
 
     for (let ele of eleList) {
-        let obj = {
-            ele: ele,
-            offsetTop: ele.offsetTop
-        }
         objList.push(ele);
-        console.log("obj=", obj);
     }
     document.addEventListener("scroll", (e) => {
-        console.log("window.scrollY=", window.scrollY);
-        found = objList.find((item) => item.offsetTop > window.scrollY);
-        console.log('found=', found);
-        if (!found) {
-            found = objList[objList.length - 1];
+        currentElement = objList.find((item) => item.offsetTop > window.scrollY);
+        if (!currentElement) {
+            currentElement = objList[objList.length - 1];
         }
-        let activeEle = $(".active");
-        if (activeEle) {
-            console.log("activeEle.id=", activeEle.id);
-            activeEle.classList.remove("active");
-        }
-
-        console.log("found.id=", found.id);
-        scrollSpyEle.innerHTML = `<div id="${found.id}ScrollSpy" style="padding:5px">At: #${found.id}</div>`;
+        scrollSpyEle.innerHTML = `<div id="${currentElement.id}ScrollSpy" style="padding:5px">At: #${currentElement.id}</div>`;
     })
 }
 
