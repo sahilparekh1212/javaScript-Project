@@ -10,11 +10,11 @@ This project is focused on javaScript.
 <br>
 <li>
 HTML:<br>
-Here, HTML is injected through template syntax. 
+Entire HTML body is injected by template syntax of JS. 
 </li>
 <br>
 <li>CSS: <br>
-It does not have any custom CSS file for styling, instead it uses BootStrap for general styling.
+No custom styling is used in HTML or CSS file.
 </li>
 <br>
 </ul>
