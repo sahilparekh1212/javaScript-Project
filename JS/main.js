@@ -227,9 +227,10 @@ function updateFooter() {
     const footer = $('footer');
     footer.innerHTML = `
         <div class="container">
-            <p class="dateModified text-info" style="padding-left:1rem"></p>
+            <p class="dateModified text-info"></p>
         </div>
     `;
+    injectProfileInfo();
 }
 
 function addDOMEvents() {
@@ -540,7 +541,6 @@ function toggleFullScreen(buttonId) {
 function addDateModified() {
     let ele = $('.dateModified');
     ele.innerHTML += "Date Modified: " + new Date(document.lastModified).toLocaleString(['en-CA', 'en-US'], { year: "numeric", month: "long", day: "numeric" });
-    ele.style.paddingLeft = "1rem";
 }
 
 function scrollSpy() {
@@ -575,4 +575,24 @@ function findFactorial() {
         }
     }
     $('#factorialAnswer').innerHTML = `Answer: ${findFactorialHelper(input)}`;
+}
+
+function injectProfileInfo() {
+    const URL = 'https://api.github.com/users/sahilparekh1212';
+    fetch(URL, {
+        method: 'GET'
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            let gitHubData = data;
+            console.log('gitHubData=', gitHubData);
+            let footerContainer = $('footer .container');
+            let gitHubInfoEle = document.createElement('div');
+            gitHubInfoEle.innerHTML = `
+                <p><i class="bi bi-github"></i> Profile: <a target="_blank" href="${gitHubData['html_url']}">${gitHubData['html_url']}</a></p>
+                <p><i class="bi bi-github"></i> Repos: <a target="_blank" href="${gitHubData['repos_url']}">${gitHubData['repos_url']}</a></p>
+                <p><i class="bi bi-linkedin"></i> Profile: <a target="_blank" href="https://linkedin.com/in/sahil-parekh-6642321b5">sahil-parekh</a></p>
+            `;
+            footerContainer.appendChild(gitHubInfoEle);
+        });
 }
