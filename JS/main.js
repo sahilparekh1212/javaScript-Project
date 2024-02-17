@@ -28,7 +28,7 @@ function updateHeader() {
     header.innerHTML = `
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <span href="#" class="navbar-brand">javaScript Project</span>
+                <span href="#" class="navbar-brand">ES6+ javaScript Project</span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuItems">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -206,17 +206,6 @@ function updateMain() {
                     </div>
                 </div>
 
-                <div class="card col-md-3 m-2 bg-light text-dark" id="factorialDiv">
-                    <div class="card-body" id="factorialDivBody">
-                        <h5 class="card-title"> Factorial Using Recursion</h5>
-                        <div class="d-flex">                        
-                            <div>Factorial of : <input class="bg-light text-dark rounded p-1 m-1" type="number" value="5" style="max-width:70px" id="factorialInput" ></div>
-                            <button onclick="findFactorial()" class="bi bi-search rounded p-1 m-1"> Answer</button>
-                        </div>
-                        <div id="factorialAnswer"></div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -270,8 +259,6 @@ function addDOMEvents() {
     tabClicked('tab1');
 
     slideDisplay(0);
-
-    addDateModified();
 
     scrollSpy();
 }
@@ -538,11 +525,6 @@ function toggleFullScreen(buttonId) {
     }
 }
 
-function addDateModified() {
-    let ele = $('.dateModified');
-    ele.innerHTML += "Date Modified: " + new Date(document.lastModified).toLocaleString(['en-CA', 'en-US'], { year: "numeric", month: "long", day: "numeric" });
-}
-
 function scrollSpy() {
     let eleList = document.querySelectorAll(".card");
     let currentElement = null;
@@ -559,22 +541,6 @@ function scrollSpy() {
         }
         scrollSpyEle.innerHTML = `<div id="${currentElement.id}ScrollSpy" style="padding:5px">At: #${currentElement.id}</div>`;
     })
-}
-
-function findFactorial() {
-    let input = document.getElementById("factorialInput").value;
-    function findFactorialHelper(input) {
-        if (input < 0) {
-            return -1;
-        }
-        else if (input == 0 || input == 1) {
-            return 1;
-        }
-        else {
-            return (input * findFactorialHelper(input - 1));
-        }
-    }
-    $('#factorialAnswer').innerHTML = `Answer: ${findFactorialHelper(input)}`;
 }
 
 function injectProfileInfo() {
