@@ -555,9 +555,10 @@ function injectProfileInfo() {
             let footerContainer = $('footer .container');
             let gitHubInfoEle = document.createElement('div');
             gitHubInfoEle.innerHTML = `
-                <p><i class="bi bi-github"></i> Profile: <a target="_blank" href="${gitHubData['html_url']}">${gitHubData['html_url']}</a></p>
-                <p><i class="bi bi-github"></i> Repos: <a target="_blank" href="${gitHubData['repos_url']}">${gitHubData['repos_url']}</a></p>
-                <p><i class="bi bi-linkedin"></i> Profile: <a target="_blank" href="https://linkedin.com/in/sahil-parekh-6642321b5">sahil-parekh</a></p>
+                <p><i class="bi bi-github"></i> GitHub: <a target="_blank" href="${gitHubData['html_url']}">${gitHubData['html_url']}</a></p>
+                <p><i class="bi bi-linkedin"></i> LinkedIn: <a target="_blank" href="https://linkedin.com/in/sahilparekh1212">https://linkedin.com/in/sahilparekh1212</a></p>
+                <p><i class="bi bi-envelope"></i> Email: <a target="_blank" href="mailto:sahilparekh1212@gmail.com">sahilparekh1212@gmail.com</a></p>
+                <p><i class="bi bi-code-slash"></i> Leetcode: <a target="_blank" href="https://www.leetcode.com/sahilparekh1212">https://www.leetcode.com/sahilparekh1212</a></p>
             `;
             footerContainer.appendChild(gitHubInfoEle);
         });
